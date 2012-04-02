@@ -1,0 +1,5 @@
+INSTALL
+=======
+
+-In the installation process, It will be necessary to delete ".php" extensions for each file
+

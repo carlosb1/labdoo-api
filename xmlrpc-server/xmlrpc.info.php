@@ -1,0 +1,5 @@
+
+name = XMLRPC Labdoo Server
+description = Demonstrates how to implement XML-RPC callbacks.
+core = 6.x
+package = labdoo-api
