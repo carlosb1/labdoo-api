@@ -1,6 +1,8 @@
 import static org.junit.Assert.*;
 import junit.framework.Assert;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import api.resources.Laptop;
 //TODO Implements wrong cases
 public class ClientTest {
 	LabdooClient client = null;
+	final Log log = LogFactory.getLog(ClientTest.class);
 
 	@Before
 	public void setUp() throws Exception {
@@ -31,16 +34,11 @@ public class ClientTest {
 	}
 	
 	@Test
-	public void testAddLaptop() throws APIException {
-		String response = client.addLaptop(Laptop.newSimpleLaptop());
-		System.out.println("Response test: "+response);
-		//Assert.assertEquals("Message: ", actual);
-//		Assert.assertEquals("The laptop was malformed","demo", laptop.getName());
-//		Assert.assertEquals("The  STATUS is not well initialized",Laptop.UNASSIGNED, laptop.getSTATUS());		
-//		Assert.assertNotNull("The Id is null",laptop.getId());
-//		Assert.assertNotNull("The description is null",laptop.getDescription());
-//		Assert.assertNotNull("The owner is null",laptop.getOwner());
-//		Assert.assertNotNull("The project is null",laptop.getProject());
+	public void testAddRemoveLaptop() throws APIException {
+		String nid = client.addLaptop(Laptop.newSimpleLaptop());
+		log.info("Response test: "+nid);
+//		boolean result = client.deleteLaptop(nid);
+//		log.info("It was deleted: "+result);
 		
 	}
 	

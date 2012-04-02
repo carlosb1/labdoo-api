@@ -5,8 +5,6 @@ import java.util.Map;
 
 //TODO IMPLEMENT EQUALS AND TOSTRING!!
 public class Laptop {
-	//TODO AND FIXME Check which possible status are!!
-
 	public final static String NULL = "null";
 	public final static String TAGGED_S0 = "Tagged with a Labdoo ID (S0)";
 	public final static String DONATED_S1 = "Donated, in quality assurance process (S1)";
@@ -18,12 +16,7 @@ public class Laptop {
 	public final static String CHECKED_OUT_S7 = "(Library) Checked out (S7)";
 	public final static String AVAILABLE_S8 = "(Library) Available (S8)";
 	
-
-
-// 	$newnode = new stdClass();
-// 	$newnode->title = ''; 
-// 	$newnode->uid = 1; 	//TODO TO TEST ALL THESE TYPES
-// 	$newnode->type = 'laptop'; 
+	
 // 	$newnode->field_how_did_you_learn = NULL;
 // 	//$newnode->field_current_manager-> 1
 // 	$newnode->field_dev_type = $dev_type;
@@ -39,7 +32,6 @@ public class Laptop {
 // 	$newnode->field_destination = $destination;
 // 	$newnode->field_501c3_recipient = $recipient;
 // 	$newnode->field_laptop_domain = $laptop_domain;
-// 	$newnode->field_status = $status;
 // 	//$newnode->field_available_day->date
 // 	$newnode->field_library_notification = NULL;
 // 	$newnode->field_checkedout_location = NULL;
@@ -47,6 +39,10 @@ public class Laptop {
 // 	//$newnode->field_pic_deployed->NULL;
 // 	$newnode->field_notes = '';
 	
+	
+
+
+
 	
 	//get
 	private String uid = "";
