@@ -80,7 +80,10 @@ function labdoo_xmlrpc() {
   	}
 	$node = arrayToObject($args);
  	$node->uid = 1; 	
- 	$node->type = 'laptop';
+	$node->type = "laptop"; // Or any other content type you want
+	//$node->field_status[0]['value'] = "Tagged with a Labdoo ID (S0)";
+
+	//node_object_prepare($node); // Set some default values.
 	//$node = node_submit($node); // Prepare node for a submit
 	node_save($node); // After this call we'll get a nid
 
@@ -95,9 +98,13 @@ function arrayToObject($array) {
     $object = new stdClass();
     if (is_array($array) && count($array) > 0) {
       foreach ($array as $name=>$value) {
-         $name = strtolower(trim($name));
+         //$name = strtolower(trim($name));
          if (!empty($name)) {
-            $object->$name = arrayToObject($value);
+	    //We will not use iterative arrays
+            //$object->$name = arrayToObject($value);
+	$arrayValue= array();
+	$arrayValue[0]['value'] = $value;
+	$object->$name = $arrayValue;
          }
       }
       return $object; 

@@ -70,8 +70,9 @@ public class LabdooClient {
 	
 	public String addLaptop (Laptop laptop) throws APIException {
 		try{
-	        
-		return (String)client.execute(ADDLAPTOP, new Object [] {laptop.toMap()});
+			String nid = (String)client.execute(ADDLAPTOP, new Object [] {laptop.toMap()});
+			laptop.setNid(nid);
+		return nid;
 			
 		} catch (XmlRpcException e) {
 			log.error(e.getMessage(),e.getCause());			

@@ -5,7 +5,16 @@ import java.util.Map;
 
 //TODO IMPLEMENT EQUALS AND TOSTRING!!
 public class Laptop {
+	
+	//HOW DID YOU LEARN
+	public final static String FROM_FRIEND = "From a friend";
+	public final static String FROM_INTERNET = "From the Internet";
+	public final static String FROM_UCI_BOOKSTORE = "From the UCI bookstore";
+	public final static String FROM_CONFERENCE_OR_EVENT = "From a conference or Labdoo event";
+	public final static String FROM_HUB= "I belong to a Labdoo hub";
+	
 	public final static String NULL = "null";
+	//STATUS
 	public final static String TAGGED_S0 = "Tagged with a Labdoo ID (S0)";
 	public final static String DONATED_S1 = "Donated, in quality assurance process (S1)";
 	public final static String PASSED_QUALITY_ASSURANCE_S2 = "Passed quality assurance (S2)";
@@ -15,55 +24,92 @@ public class Laptop {
 	public final static String RECYCLED_S6 = "Recycled (S6)";
 	public final static String CHECKED_OUT_S7 = "(Library) Checked out (S7)";
 	public final static String AVAILABLE_S8 = "(Library) Available (S8)";
+	//devType
+	public final static String TYPE_LAPTOP = "Laptop";
+	public final static String TYPE_GOOGLE_PHONE = "Google phone";
+	public final static String TYPE_IPHONE =  "iPhone";
+	public final static String TYPE_INTERNET_TABLET = "Internet tablet";
+	public final static String TYPE_IPAD = "iPad";
+	public final static String TYPE_DESKTOP = "Desktop";
 	
+	//number of cpus
+	public final static String CPU_ONE = "1 (Single core)";
+	public final static String CPU_TWO ="2 (Duo core)";
+	public final static String CPU_THREE ="3";
+	public final static String CPU_FOUR ="4";
+	public final static String CPU_FIVE ="5";
+	public final static String CPU_SIX ="6";
+	public final static String CPU_SEVEN ="7";
+	public final static String CPU_EIGHT ="8";
 	
-// 	$newnode->field_how_did_you_learn = NULL;
-// 	//$newnode->field_current_manager-> 1
-// 	$newnode->field_dev_type = $dev_type;
+	//a501
+	public final static String RECIP_NOT_KNOW = "Not known yet";
+	public final static String RECIP_EWB_ORANGE_COUNTY = "EWB Orange County";
+	public final static String RECIP_EWB_UCI ="EWB UCI";
+	public final static String RECIP_EWB_UCLA ="EWB UCLA";
+	public final static String RECIP_EWB_WESTERN_MA ="EWB Western MA";
+	public final static String RECIP_WCE ="World Computer Exchange";
+	
+	//domain
+	public final static String DOMAIN_INDIVIDUAL = "Individual volunteer (grassroots)";
+	public final static String  DOMAIN_CASASITO = "Casasito, Guatemala";
+	public final static String  DOMAIN_EWB_UCI = "Engineers Without Borders @ UCI";
+	public final static String  DOMAIN_EWB_MASSACHUSETTS = "Engineers Without Borders @ Western Massachusetts";
+	public final static String  DOMAIN_FOXCONN = "Foxconn";
+	public final static String  DOMAIN_I2CAT = "I2CAT, Barcelona";
+	public final static String  DOMAIN_MERCIMED = "MerciMed, New York";
+	public final static String  DOMAIN_SPRINGSOFT = "SpringSoft";
+	public final static String  DOMAIN_UCI = "University of California, Irvine";
+	public final static String  DOMAIN_UCLA = "University of California, Los Angeles";
+	public final static String  DOMAIN_WCE = "World Computer Exchange, Boston";
+	
+	//field_status
+	private String status = "";
+// 	field_how_did_you_learn
+	private String howDidYouLearn = "";
+// 	//field_current_manager
+	//TODO TO TEST, It WOULD BE AN USER ACCOUNT
+	private String currentManager = "";
+// 	field_dev_type = $dev_type;
+	private String devType = "";
 // 	//$newnode->field_date_received->date
 // 	//$newnode->field_date_delivered->date
 // 	//$newnode->field_date_recycled->date
-// 	$newnode->field_model = $model;
-// 	$newnode->field_cpu->$cpu;
-// 	$newnode->field_cpu_type = $cpu_type;
-// 	$newnode->field_memory->$memory;
-// 	$newnode->field_hard_drive->$hard_drive;
-// 	$newnode->field_current_os = $os;
-// 	$newnode->field_destination = $destination;
-// 	$newnode->field_501c3_recipient = $recipient;
-// 	$newnode->field_laptop_domain = $laptop_domain;
 // 	//$newnode->field_available_day->date
-// 	$newnode->field_library_notification = NULL;
-// 	$newnode->field_checkedout_location = NULL;
 // 	//$newnode->field_picture->NULL;
-// 	//$newnode->field_pic_deployed->NULL;
-// 	$newnode->field_notes = '';
-	
-	
-
-
-
-	
-	//get
-	private String uid = "";
-
-	//reference to current manager
-	private String currentManager = "";
+// 	//$newnode->field_pic_deployed->NULL;	
+// field_model = $model;
 	private String model = "";
-	private String cpu = "";
+// field_cpu integer
+	private int cpu = 0;
+// field_cpu_type 
 	private String cpuType = "";
-	private String memory = "";
-	private String hardDrive = "";
+// field_memory integer
+	private int memory = 0;
+// field_hard_drive integer
+	private int hardDrive = 0;	
+//  field_current_os
 	private String currentOS = "";
+// 	field_destination
 	private String destination  = "";
+// 	field_501c3_recipient
 	private String a501c3Recip = "";
+// 	field_laptop_domain 
 	private String laptopDomain = "";
-	private String status = "";
+// 	field_library_notification 
+	private String libraryNotification = "";
+// 	field_checkedout_location
+	private String checkedoutLocation = "";	
+// 	field_notes
+	private String notes = "";
+	private String uid = "1";
+	private String nid = "";
+
 	
 	
 	public static Laptop newSimpleLaptop () {
 		Laptop laptop = new Laptop ();
-		laptop.uid = "1";
+		//laptop.uid = "1";
 		laptop.status = TAGGED_S0;
 		return laptop;
 		
@@ -74,18 +120,20 @@ public class Laptop {
 	//EMPTY LAPTOP
 	final static public Laptop EMPTYLAPTOP = new Laptop();
 	
-	public String getUid() {
-		return uid;
+
+
+
+
+	
+	
+	public String getStatus() {
+		return status;
 	}
 
 
-
-
-	public void setUid(String uid) {
-		this.uid = uid;
+	public String getHowDidYouLearn() {
+		return howDidYouLearn;
 	}
-
-
 
 
 	public String getCurrentManager() {
@@ -93,13 +141,9 @@ public class Laptop {
 	}
 
 
-
-
-	public void setCurrentManager(String currentManager) {
-		this.currentManager = currentManager;
+	public String getDevType() {
+		return devType;
 	}
-
-
 
 
 	public String getModel() {
@@ -107,27 +151,9 @@ public class Laptop {
 	}
 
 
-
-
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-
-
-
-	public String getCpu() {
+	public int getCpu() {
 		return cpu;
 	}
-
-
-
-
-	public void setCpu(String cpu) {
-		this.cpu = cpu;
-	}
-
-
 
 
 	public String getCpuType() {
@@ -135,41 +161,14 @@ public class Laptop {
 	}
 
 
-
-
-	public void setCpuType(String cpuType) {
-		this.cpuType = cpuType;
-	}
-
-
-
-
-	public String getMemory() {
+	public int getMemory() {
 		return memory;
 	}
 
 
-
-
-	public void setMemory(String memory) {
-		this.memory = memory;
-	}
-
-
-
-
-	public String getHardDrive() {
+	public int getHardDrive() {
 		return hardDrive;
 	}
-
-
-
-
-	public void setHardDrive(String hardDrive) {
-		this.hardDrive = hardDrive;
-	}
-
-
 
 
 	public String getCurrentOS() {
@@ -177,27 +176,9 @@ public class Laptop {
 	}
 
 
-
-
-	public void setCurrentOS(String currentOS) {
-		this.currentOS = currentOS;
-	}
-
-
-
-
 	public String getDestination() {
 		return destination;
 	}
-
-
-
-
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
-
-
 
 
 	public String getA501c3Recip() {
@@ -205,35 +186,34 @@ public class Laptop {
 	}
 
 
-
-
-	public void setA501c3Recip(String a501c3Recip) {
-		this.a501c3Recip = a501c3Recip;
-	}
-
-
-
-
 	public String getLaptopDomain() {
 		return laptopDomain;
 	}
 
 
-
-
-	public void setLaptopDomain(String laptopDomain) {
-		this.laptopDomain = laptopDomain;
+	public String getLibraryNotification() {
+		return libraryNotification;
 	}
 
 
-
-
-	public String getStatus() {
-		return status;
+	public String getCheckedoutLocation() {
+		return checkedoutLocation;
 	}
 
 
+	public String getNotes() {
+		return notes;
+	}
 
+
+	public String getUid() {
+		return uid;
+	}
+
+
+	public String getNid() {
+		return nid;
+	}
 
 
 	public void setStatus(String status) {
@@ -241,28 +221,111 @@ public class Laptop {
 	}
 
 
+	public void setHowDidYouLearn(String howDidYouLearn) {
+		this.howDidYouLearn = howDidYouLearn;
+	}
 
 
+	public void setCurrentManager(String currentManager) {
+		this.currentManager = currentManager;
+	}
 
-	
 
-	
-	
-	public Map<String,String> toMap() {
-		Map<String,String> params = new HashMap<String,String>();
+	public void setDevType(String devType) {
+		this.devType = devType;
+	}
+
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+
+	public void setCpu(int cpu) {
+		this.cpu = cpu;
+	}
+
+
+	public void setCpuType(String cpuType) {
+		this.cpuType = cpuType;
+	}
+
+
+	public void setMemory(int memory) {
+		this.memory = memory;
+	}
+
+
+	public void setHardDrive(int hardDrive) {
+		this.hardDrive = hardDrive;
+	}
+
+
+	public void setCurrentOS(String currentOS) {
+		this.currentOS = currentOS;
+	}
+
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+
+	public void setA501c3Recip(String a501c3Recip) {
+		this.a501c3Recip = a501c3Recip;
+	}
+
+
+	public void setLaptopDomain(String laptopDomain) {
+		this.laptopDomain = laptopDomain;
+	}
+
+
+	public void setLibraryNotification(String libraryNotification) {
+		this.libraryNotification = libraryNotification;
+	}
+
+
+	public void setCheckedoutLocation(String checkedoutLocation) {
+		this.checkedoutLocation = checkedoutLocation;
+	}
+
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
+	public void setNid(String nid) {
+		this.nid = nid;
+	}
+
+
+	public Map<String,Object> toMap() {
+		Map<String,Object> params = new HashMap<String,Object>();
 		
-		if (!uid.equals("")) params.put("uid",uid);
-		if (!currentManager.equals("")) params.put("currentManager",currentManager);
-		if (!model.equals("")) params.put("model",model);
-		if (!cpu.equals("")) params.put("cpu",cpu);
-		if (!cpuType.equals("")) params.put("cpuType",cpuType);
-		if (!memory.equals("")) params.put("memory",memory);
-		if (!hardDrive.equals("")) params.put("hardDrive",hardDrive);
-		if (!currentOS.equals("")) params.put("currentOS",currentOS);
-		if (!destination.equals("")) params.put("destination",destination);
-		if (!a501c3Recip.equals("")) params.put("a501c3Recip",a501c3Recip);
-		if (!laptopDomain.equals("")) params.put("laptopDomain",laptopDomain);
-		if (!status.equals("")) params.put("status",status);
+//		if (!uid.equals("")) params.put("uid",uid);
+		if (!howDidYouLearn.equals("")) params.put("field_how_did_you_learn",howDidYouLearn);
+		if (!currentManager.equals("")) params.put("field_current_manager",currentManager);
+		if (!model.equals("")) params.put("field_model",model);
+		if (cpu !=0 ) params.put("field_cpu",new Integer(cpu));
+		if (!cpuType.equals("")) params.put("field_cpu_type",cpuType);
+		if (memory!=0 ) params.put("field_memory",new Integer(memory));
+		if (hardDrive !=0 ) params.put("field_hard_drive integer",new Integer(hardDrive));
+		if (!currentOS.equals("")) params.put("field_current_os",currentOS);
+		if (!destination.equals("")) params.put("field_destination",destination);
+		if (!a501c3Recip.equals("")) params.put("field_501c3_recipient",a501c3Recip);
+		if (!laptopDomain.equals("")) params.put("field_laptop_domain",laptopDomain);
+		if (!status.equals("")) params.put("field_status",status);
+		if (!devType.equals("")) params.put("field_dev_type",devType);		
+		if (!libraryNotification.equals("")) params.put("field_library_notification",libraryNotification);
+		if (!checkedoutLocation.equals("")) params.put("field_checkedout_location",checkedoutLocation);
+		if (!notes.equals("")) params.put("field_notes",notes);
 		
 		
 		return params;

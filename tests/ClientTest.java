@@ -37,8 +37,8 @@ public class ClientTest {
 	public void testAddRemoveLaptop() throws APIException {
 		String nid = client.addLaptop(Laptop.newSimpleLaptop());
 		log.info("Response test: "+nid);
-//		boolean result = client.deleteLaptop(nid);
-//		log.info("It was deleted: "+result);
+		boolean result = client.deleteLaptop(nid);
+		log.info("It was deleted: "+result);
 		
 	}
 	
