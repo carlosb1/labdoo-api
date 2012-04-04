@@ -1,7 +1,9 @@
 package api.resources;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 //TODO IMPLEMENT EQUALS AND TOSTRING!!
 public class Laptop {
@@ -334,9 +336,66 @@ public class Laptop {
 	}
 	
 
-	public static Laptop newInstance(Map params) {
-		// TODO to finish
-		return Laptop.newSimpleLaptop();
+	public static Laptop newInstance(Map<String,Object> params) {
+		Laptop laptop = new Laptop();
+		Set<String> keys = params.keySet();
+		Iterator<String> iterator = keys.iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			if (key.equals("nid"))
+				laptop.setNid((String)params.get(key));
+			//if (key.equals("uid"))
+			
+			if (key.equals("field_how_did_you_learn"))
+				laptop.setHowDidYouLearn((String)params.get(key));
+		
+			if (key.equals("field_current_manager"))
+				laptop.setCurrentManager((String)params.get(key));
+
+			if (key.equals("field_model"))
+				laptop.setModel((String)params.get(key));
+
+			if (key.equals("field_cpu"))
+				laptop.setCpu(((Integer)params.get(key)).intValue());
+
+			if (key.equals("field_cpu_type"))
+				laptop.setCpuType((String)params.get(key));
+
+			if (key.equals("field_memory"))
+				laptop.setMemory(((Integer)params.get(key)).intValue());
+
+			if (key.equals("field_hard_drive integer"))
+				laptop.setHardDrive(((Integer)params.get(key)).intValue());
+
+			if (key.equals("field_current_os"))
+				laptop.setNid((String)params.get(key));
+
+			if (key.equals("field_destination"))
+				laptop.setDestination((String)params.get(key));
+
+			if (key.equals("field_501c3_recipient"))
+				laptop.setA501c3Recip((String)params.get(key));
+
+			if (key.equals("field_laptop_domain"))
+				laptop.setLaptopDomain((String)params.get(key));
+
+			if (key.equals("field_status"))
+				laptop.setStatus((String)params.get(key));
+
+			if (key.equals("field_dev_type"))
+				laptop.setDevType((String)params.get(key));
+
+			if (key.equals("field_library_notification"))
+				laptop.setLibraryNotification((String)params.get(key));
+
+			if (key.equals("field_checkedout_location"))
+				laptop.setCheckedoutLocation((String)params.get(key));
+
+			if (key.equals("field_notes"))
+				laptop.setNotes((String)params.get(key));
+		
+		}
+		return laptop;
 	}
 	 
 
