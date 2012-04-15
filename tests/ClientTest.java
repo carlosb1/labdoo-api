@@ -42,19 +42,43 @@ public class ClientTest {
 		
 	}
 	
-//	@Test
-//	public void testGetLaptop() throws APIException {
-//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop("demo"));
-//		Laptop newLaptop = client.getLaptop(laptop.getId());
-//		Assert.assertEquals("The name is not correct",laptop.getName(),newLaptop.getName());
-//		Assert.assertEquals("The  STATUS is not well initialized",laptop.getSTATUS(), newLaptop.getSTATUS());		
-//		Assert.assertEquals("The Id is not equals",laptop.getId(),newLaptop.getId());
-//		Assert.assertEquals("The description is not equals",laptop.getDescription(),newLaptop.getDescription());
-//		Assert.assertEquals("The owner is not equals",laptop.getOwner(),newLaptop.getOwner());
-//		Assert.assertEquals("The project is not equals",laptop.getProject(),newLaptop.getProject());
-//		
-//	}
-//	
+	@Test
+	public void testGetLaptop() throws APIException {
+		String nid = "464";
+		Laptop newLaptop = client.getLaptop(nid);
+		log.info(newLaptop.toString());
+		
+	}
+	
+
+	@Test
+	public void testUpdateLaptop() throws APIException {
+		String nid = "464";
+		Laptop newLaptop = client.getLaptop(nid);
+		log.info(newLaptop.toString());
+		
+	}
+	
+	
+	@Test
+	public void testSimpleLaptop() throws APIException {
+		String nid = "464";
+		Laptop newLaptop = client.getLaptop(nid);
+		log.info(newLaptop.toString());
+		
+	}
+	
+	
+	public void testCompleteLaptop() throws APIException {
+		String nid = "464";
+		Laptop newLaptop = client.getLaptop(nid);
+		log.info(newLaptop.toString());
+		
+	}
+	
+	
+	
+	//TODO ADD TESTS AND DO JAVADOC
 //	
 //	@Test
 //	public void testUpdateLaptop() throws APIException {
