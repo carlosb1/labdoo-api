@@ -82,7 +82,7 @@ function labdoo_xmlrpc() {
 	//TODO Is it necessary to put these checkers? The signature specification provides the same feature
 	//if ($args && !is_array($args)) { $args = array($args);}
 	$node = arrayToObject($args);
-	$node->uid = 1; 	
+ 	$node->uid = 1; 	
 	$node->type = "laptop"; // Or any other content type you want
 	node_save($node); // After this call we'll get a nid
 
@@ -104,10 +104,12 @@ function labdoo_xmlrpc() {
 	//TODO Is it necessary to put these checkers? The signature specification provides the same feature
 	//if ($args && !is_array($args)) { $args = array($args);}
  	$update_node = node_load($nid);
+
       foreach ($args as $name=>$value) {
-		$arrayValue= array();
-		$arrayValue[0]['value'] = $value;
-		$update_node->$name = $arrayValue;
+
+	$arrayValue= array();
+	$arrayValue[0]['value'] = $value;
+	$update_node->$name = $arrayValue;
       }
  	node_save($update_node);
 	return TRUE;
@@ -122,7 +124,6 @@ function labdoo_xmlrpc() {
 	return objectToArray($update_node);
 
  }
- 
 
 function arrayToObject($array) {
     if(!is_array($array)) {
@@ -136,9 +137,9 @@ function arrayToObject($array) {
          if (!empty($name)) {
 	    //We will not use iterative arrays
             //$object->$name = arrayToObject($value);
-			$arrayValue= array();
-			$arrayValue[0]['value'] = $value;
-			$object->$name = $arrayValue;
+	$arrayValue= array();
+	$arrayValue[0]['value'] = $value;
+	$object->$name = $arrayValue;
          }
       }
       return $object; 
@@ -159,3 +160,12 @@ function objectToArray($obj) {
         }
         return $arr;
 }
+
+  
+
+
+
+
+
+
+

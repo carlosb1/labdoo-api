@@ -1,12 +1,24 @@
 package api.resources;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import api.APIException;
+
 //TODO IMPLEMENT EQUALS AND TOSTRING!!
 public class Laptop {
+	
+	static final Log log = LogFactory.getLog(Laptop.class);
+
 	
 	//HOW DID YOU LEARN
 	public final static String FROM_FRIEND = "From a friend";
@@ -74,10 +86,16 @@ public class Laptop {
 	private String currentManager = "";
 // 	field_dev_type = $dev_type;
 	private String devType = "";
+	
 // 	//$newnode->field_date_received->date
+	private Date dateReceived = null;
 // 	//$newnode->field_date_delivered->date
+	private Date dateDelivered = null;
 // 	//$newnode->field_date_recycled->date
+	private Date dateRecycled = null;	
 // 	//$newnode->field_available_day->date
+	private Date availableDay = null;
+
 // 	//$newnode->field_picture->NULL;
 // 	//$newnode->field_pic_deployed->NULL;	
 // field_model = $model;
@@ -104,8 +122,9 @@ public class Laptop {
 	private String checkedoutLocation = "";	
 // 	field_notes
 	private String notes = "";
-	private String uid = "1";
 	private String nid = "";
+	
+	private HashMap<String,String> location = new HashMap<String,String>();
 
 	
 	
@@ -117,16 +136,6 @@ public class Laptop {
 		
 	}
 
-
-	
-	//EMPTY LAPTOP
-	final static public Laptop EMPTYLAPTOP = new Laptop();
-	
-
-
-
-
-	
 	
 	public String getStatus() {
 		return status;
@@ -206,12 +215,6 @@ public class Laptop {
 	public String getNotes() {
 		return notes;
 	}
-
-
-	public String getUid() {
-		return uid;
-	}
-
 
 	public String getNid() {
 		return nid;
@@ -298,13 +301,57 @@ public class Laptop {
 	}
 
 
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setNid(String nid) {
+		this.nid = nid;
 	}
 
 
-	public void setNid(String nid) {
-		this.nid = nid;
+	public HashMap<String,String> getLocation() {
+		return location;
+	}
+
+
+	public void setLocation(HashMap<String,String> location) {
+		this.location = location;
+	}
+	
+	public Date getDateReceived() {
+		return dateReceived;
+	}
+
+
+	public void setDateReceived(Date dateReceived) {
+		this.dateReceived = dateReceived;
+	}
+
+
+	public Date getDateDelivered() {
+		return dateDelivered;
+	}
+
+
+	public void setDateDelivered(Date dateDelivered) {
+		this.dateDelivered = dateDelivered;
+	}
+
+
+	public Date getDateRecycled() {
+		return dateRecycled;
+	}
+
+
+	public void setDateRecycled(Date dateRecycled) {
+		this.dateRecycled = dateRecycled;
+	}
+
+
+	public Date getAvailableDay() {
+		return availableDay;
+	}
+
+
+	public void setAvailableDay(Date availableDay) {
+		this.availableDay = availableDay;
 	}
 
 
@@ -329,73 +376,166 @@ public class Laptop {
 		if (!checkedoutLocation.equals("")) params.put("field_checkedout_location",checkedoutLocation);
 		if (!notes.equals("")) params.put("field_notes",notes);
 		
+		if (dateReceived!=null) params.put("field_date_received",dateToString(dateReceived));
+		if (dateDelivered!=null) params.put("field_date_delivered",dateToString(dateDelivered));
+		if (dateRecycled!=null) params.put("field_date_recycled",dateToString(dateRecycled));
+		if (availableDay!=null) params.put("field_available_day",dateToString(availableDay));
+		
 		
 		return params;
 		
 		
 	}
 	
+	private static String dateToString(Date dateToFormat) {
+		//2010-08-20T00:00:00
+		SimpleDateFormat dateFormater=new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+		return dateFormater.format(dateToFormat);		
+		
+		
+	}
+	
+	private static Date stringToDate(String dateToParse) {
+		//2010-08-20T00:00:00
+		SimpleDateFormat dateFormater=new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+		try {
+			return dateFormater.parse(dateToParse);
+		} catch (ParseException e) {
+			log.error(e);
+			return null;
+		}		
+		
+		
+	}
+	
+	
 
-	public static Laptop newInstance(Map<String,Object> params) {
+	public static Laptop newInstance(Map<String,Object> params) throws APIException {
 		Laptop laptop = new Laptop();
 		Set<String> keys = params.keySet();
 		Iterator<String> iterator = keys.iterator();
 		while (iterator.hasNext()) {
 			String key = iterator.next();
+
+
+			
+			//TODO ADD UID
 			if (key.equals("nid"))
 				laptop.setNid((String)params.get(key));
-			//if (key.equals("uid"))
+
+			if (key.equals("location") && params.get(key) !=null)
+				laptop.setLocation((HashMap)params.get(key));
+			
+			
+			Object param = (Object)hashValueToParam(params.get(key));
+			if (param == null || param.equals("")) continue;
+						
 			
 			if (key.equals("field_how_did_you_learn"))
-				laptop.setHowDidYouLearn((String)params.get(key));
+				laptop.setHowDidYouLearn((String)param);
 		
 			if (key.equals("field_current_manager"))
-				laptop.setCurrentManager((String)params.get(key));
+				laptop.setCurrentManager((String)getUIDParam(param));
 
 			if (key.equals("field_model"))
-				laptop.setModel((String)params.get(key));
+				laptop.setModel((String)param);
 
 			if (key.equals("field_cpu"))
-				laptop.setCpu(((Integer)params.get(key)).intValue());
+				laptop.setCpu(((Integer)param).intValue());
 
 			if (key.equals("field_cpu_type"))
-				laptop.setCpuType((String)params.get(key));
+				laptop.setCpuType((String)param);
 
 			if (key.equals("field_memory"))
-				laptop.setMemory(((Integer)params.get(key)).intValue());
+				laptop.setMemory(((Integer)param).intValue());
 
 			if (key.equals("field_hard_drive integer"))
-				laptop.setHardDrive(((Integer)params.get(key)).intValue());
+				laptop.setHardDrive(((Integer)param).intValue());
 
 			if (key.equals("field_current_os"))
-				laptop.setNid((String)params.get(key));
+				laptop.setNid((String)param);
 
 			if (key.equals("field_destination"))
-				laptop.setDestination((String)params.get(key));
+				laptop.setDestination((String)param);
 
 			if (key.equals("field_501c3_recipient"))
-				laptop.setA501c3Recip((String)params.get(key));
+				laptop.setA501c3Recip((String)param);
 
 			if (key.equals("field_laptop_domain"))
-				laptop.setLaptopDomain((String)params.get(key));
+				laptop.setLaptopDomain((String)param);
 
 			if (key.equals("field_status"))
-				laptop.setStatus((String)params.get(key));
+				laptop.setStatus((String)param);
 
 			if (key.equals("field_dev_type"))
-				laptop.setDevType((String)params.get(key));
+				laptop.setDevType((String)param);
 
 			if (key.equals("field_library_notification"))
-				laptop.setLibraryNotification((String)params.get(key));
+				laptop.setLibraryNotification((String)param);
 
 			if (key.equals("field_checkedout_location"))
-				laptop.setCheckedoutLocation((String)params.get(key));
+				laptop.setCheckedoutLocation((String)param);
 
 			if (key.equals("field_notes"))
-				laptop.setNotes((String)params.get(key));
-		
+				laptop.setNotes((String)param);
+
+			//TODO TO TEST
+//			if (key.equals("field_date_received"))
+//				laptop.setDateReceived(stringToDate((String)param));
+//			
+//			if (key.equals("field_date_delivered"))
+//				laptop.setDateDelivered(stringToDate((String)param));
+//			
+//			if (key.equals("field_available_day"))
+//				laptop.setAvailableDay(stringToDate((String)param));
+//			
+//			if (key.equals("field_date_recycled"))
+//				laptop.setDateRecycled(stringToDate((String)param));
+			
+			
+			
 		}
 		return laptop;
+	}
+	
+	private static Object hashValueToParam(Object drupalParam) throws APIException {
+			if (drupalParam instanceof Object[] && ((Object[])drupalParam).length >0) {
+				 Object arrayParam = ((Object[])drupalParam)[0];
+				if (arrayParam instanceof Map && ((Map)arrayParam).get("value") != null) {
+					return ((Map)arrayParam).get("value");
+				}
+				
+			}
+
+		return drupalParam;
+	}
+	
+	private static Object getUIDParam (Object param) {
+		Object[] arrayParam = (Object[])param;
+		Map hashParam = (Map)arrayParam[0];
+		return hashParam.get("uid");
+		
+	}
+
+	
+	
+	
+
+
+
+	@Override
+	public String toString() {
+		return "Laptop [status=" + status + ", howDidYouLearn="
+				+ howDidYouLearn + ", currentManager=" + currentManager
+				+ ", devType=" + devType + ", model=" + model + ", cpu=" + cpu
+				+ ", cpuType=" + cpuType + ", memory=" + memory
+				+ ", hardDrive=" + hardDrive + ", currentOS=" + currentOS
+				+ ", destination=" + destination + ", a501c3Recip="
+				+ a501c3Recip + ", laptopDomain=" + laptopDomain
+				+ ", libraryNotification=" + libraryNotification
+				+ ", checkedoutLocation=" + checkedoutLocation + ", notes="
+				+ notes + ", nid=" + nid + ", location="
+				+ location + "]";
 	}
 	 
 
