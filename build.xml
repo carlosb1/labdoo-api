@@ -4,7 +4,7 @@
     <property name="lib.dir" value="libs"/>
     <property name="server.name" value="ec2-50-17-80-217.compute-1.amazonaws.com"/>
     <property name="server.path" value="/persistent/labdoo/sites/all/modules/"/>
-	<property name="client.key" value="/home/carlos/Escritorio/labdoo-testing/labdoo-dev.pem"/>
+	<property name="client.key" value="/home/carlos/Desktop/toLabdoo/labdoo-dev.pem"/>
 	<property name="server.src_dir" value="xmlrpc-server"/>
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
@@ -29,13 +29,53 @@
     	<copy file="xmlrpc-server/xmlrpc.info.php" tofile="xmlrpc-server/xmlrpc.info"/>
     	<copy file="xmlrpc-server/xmlrpc.module.php" tofile="xmlrpc-server/xmlrpc.module"/>
     	  <scp todir="root@${server.name}:${server.path}xmlrpc-server" keyfile="${client.key}">
-    	  	<fileset dir="${server.src_dir}" />
+    	  	<fileset dir="xmlrpc-server" />
     	  	</scp>
 		  <sshexec host="${server.name}"
 			username="root"
 			keyfile="${client.key}"
 			command="/etc/init.d/httpd restart"/>
     </target>
+	
+	<target name="remote-clean-examples">
+		  <sshexec host="${server.name}"
+			username="root"
+			keyfile="${client.key}"
+			command="rm -rf /tmp/form_example.old; mv -f ${server.path}form_example /tmp/form_example.old; mkdir ${server.path}form_example"/>		
+	</target>	
+
+    <target name="remote-deploy-examples" depends="remote-clean-examples">
+    	<!-- TODO to remove -->
+<!--    	<copy file="xmlrpc-server/xmlrpc.info.php" tofile="xmlrpc-server/xmlrpc.info"/>
+    	<copy file="xmlrpc-server/xmlrpc.module.php" tofile="xmlrpc-server/xmlrpc.module"/> -->
+    	  <scp todir="root@${server.name}:${server.path}form_example" keyfile="${client.key}">
+    	  	<fileset dir="form_example" />
+    	  </scp>
+    </target>
+	
+	<target name="remote-clean-webform">
+		  <sshexec host="${server.name}"
+			username="root"
+			keyfile="${client.key}"
+			command="rm -rf /tmp/webform.old; mv -f ${server.path}webform /tmp/webform.old; mkdir ${server.path}webform"/>		
+	</target>	
+
+    <target name="remote-deploy-webform" depends="remote-clean-webform">
+    	<!-- TODO to remove -->
+<!--    	<copy file="xmlrpc-server/xmlrpc.info.php" tofile="xmlrpc-server/xmlrpc.info"/>
+    	<copy file="xmlrpc-server/xmlrpc.module.php" tofile="xmlrpc-server/xmlrpc.module"/> -->
+    	  <scp todir="root@${server.name}:${server.path}webform" keyfile="${client.key}">
+    	  	<fileset dir="webform" />
+    	  </scp>
+    </target>	
+	
+    <target name="remote-restart" depends="remote-clean">
+		  <sshexec host="${server.name}"
+			username="root"
+			keyfile="${client.key}"
+			command="/etc/init.d/httpd restart"/>
+    </target>	
+	
 
     <target name="remote-stop" depends="remote-clean">
 		  <sshexec host="${server.name}"

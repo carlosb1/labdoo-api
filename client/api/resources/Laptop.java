@@ -402,6 +402,7 @@ public class Laptop {
 			return dateFormater.parse(dateToParse);
 		} catch (ParseException e) {
 			log.error(e);
+			//TODO change this, It is not good practices return null!
 			return null;
 		}		
 		
