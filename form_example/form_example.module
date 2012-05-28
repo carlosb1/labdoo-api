@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Examples demonstrating the Drupal Form API.
+ */
+
+/**
+ * @defgroup form_example Example: Form API
+ * @ingroup examples
+ * @{
+ * Examples demonstrating the Form API. (drupal 6)
+ *
+ * This example is part of the Examples for Developers Project which you can download
+ * and experiment with here: http://drupal.org/project/examples
+ */
+
+require_once('form_example_elements.inc');
+
+/**
+ * Implements hook_menu() to set up the URLs (menu entries) for the
+ * form examples.
+ */
+function form_example_menu() {
+  $items['examples/form_example'] = array(
+    'title' => t('Form Example'),
+    'page callback' => 'form_example_info',
+    'access callback' => TRUE,
+  );
+
+  $items['examples/form_example/element_example'] = array(
+    'title' => 'Element example',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_example_tutorial_10'),
+    'access callback' => TRUE,
+    'file' => 'form_example_tutorial.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Simple page callback to give feedback to the user about this example.
+ */
+function form_example_info() {
+  return t('The form example provides <a href="!tutorial_url">tutorial examples</a> tied to the <a href="!handbook_url">handbook</a> and <a href="!element_url">form element examples</a>.', array('!tutorial_url' => url('examples/form_example/tutorial'), '!handbook_url' => 'http://drupal.org/node/262422', '!element_url' => url('examples/form_example/element_example')));
+}
+
