@@ -107,9 +107,9 @@ function labdoo_xmlrpc() {
 
       foreach ($args as $name=>$value) {
 
-	$arrayValue= array();
-	$arrayValue[0]['value'] = $value;
-	$update_node->$name = $arrayValue;
+			$arrayValue= array();
+			$arrayValue[0]['value'] = $value;
+			$update_node->$name = $arrayValue;
       }
  	node_save($update_node);
 	return TRUE;

@@ -1,38 +1,8 @@
 <?php
 
 module_load_include('inc', 'content', 'includes/content.node_form');
+require_once('labdoo.inc');
 
-
-/**
- * @file
- * This is the Form API Tutorial from the handbook.
- * @see http://drupal.org/node/262422
- *
- * It goes through ten form examples in increasing complexity to demonstrate
- * Drupal 6 Form API.
- *
- * Links are provided inline for the related handbook pages.
- */
-
-function form_example_tutorial() {
-  return t('This is a set of ten form tutorials tied to the <a href="http://drupal.org/node/262422">Drupal handbook</a>.');
-}
-
-
-
-
-//////////////// Tutorial Example 10 //////////////////////
-
-/**
- * Example 10: A simple multistep form.
- *
- * Handbook page: http://drupal.org/node/717750.
- *
- * For more extensive multistep forms,
- * @see http://pingvision.com/blog/ben-jeavons/2009/multi-step-forms-drupal-6-using-variable-functions
- *
- */
- 
  
 /**
  * Adds logic to our form builder to give it two pages. It checks a
@@ -56,23 +26,28 @@ function form_example_tutorial_10($form_state) {
     '#title' => 'Number of laptops to tag',
      '#size' => 3, // added
     '#maxlength' => 4, // added   
-  );
-
-  
-    $form['basic'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Basic parameters'),
   );	
-	
   
   	/** Obligatory parameters **/ 
   	$field = content_fields('field_current_manager');
 	$form['#basic']['field_current_manager'] = $field;
-	$form['basic'] += (array) content_field_form($form, $form_state, $field);
-
+	$form += (array) content_field_form($form, $form_state, $field);
+	
+    $form['field_current_manager'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => 'Current laptop manager',
+     '#size' => 64, // added
+    '#maxlength' => 64, // added
+    '#description' => "Write here the user name of the person who is currently in charge of the laptop. 
+    					If you are creating a new laptop, the system will assign by default your user name and you should not change that. 
+    					If you are modifying this laptop and now you will be managing it, then you should overwrite this value with your user name.",
+       
+  );	
+  
 
 	
-  	$form['basic']['domain_type'] = array(
+  	$form['field_laptop_domain'] = array(
     '#type' => 'select',
     '#title' => t('Domain'),
     '#required' => TRUE,
@@ -84,15 +59,12 @@ function form_example_tutorial_10($form_state) {
 	
 	$field = content_fields('field_current_manager');
 	$form['#basic']['field_current_manager'] = $field;
-	$form['basic'] += (array) content_field_form($form, $form_state, $field);
-	
-	
-	/** location parameters **/ 
+	$form+= (array) content_field_form($form, $form_state, $field);
 	
 	
 	/** laptop parameters  **/ 					
 	
-	 $form['basic']['cpu_type'] = array(
+	 $form['field_cpu_type'] = array(
     '#type' => 'select',
     '#title' => t('Number of CPUs'),
     '#required' => FALSE,
@@ -105,18 +77,18 @@ function form_example_tutorial_10($form_state) {
 
 	$field = content_fields('field_model');
 	$form['#basic']['field_model'] = $field;
-	$form['basic'] += (array) content_field_form($form, $form_state, $field);		
+	$form+= (array) content_field_form($form, $form_state, $field);		
 		
 	$field = content_fields('field_memory');
 	$form['#basic']['field_memory'] = $field;
-	$form['basic'] += (array) content_field_form($form, $form_state, $field);	
+	$form+= (array) content_field_form($form, $form_state, $field);	
 
 	$field = content_fields('field_cpu');
 	$form['#basic']['field_cpu'] = $field;
-	$form['basic'] += (array) content_field_form($form, $form_state, $field);
+	$form += (array) content_field_form($form, $form_state, $field);
 	
 	
-  	$form['basic']['status_type'] = array(
+  	$form['field_status'] = array(
     '#type' => 'select',
     '#title' => t('Status'),
     '#required' => TRUE,
@@ -127,20 +99,20 @@ function form_example_tutorial_10($form_state) {
 
 	$field = content_fields('field_hard_drive');
 	$form['#basic']['field_hard_drive'] = $field;
-	$form['basic'] += (array) content_field_form($form, $form_state, $field);
+	$form += (array) content_field_form($form, $form_state, $field);
 	
 	
 
-  $form['basic']['date'] = array(	
+  $form['date'] = array(	
       '#type' => 'date', 
       '#title' => check_plain("Date"), 
-      '#description' => "Date received",
+      '#description' => "Date available",
       '#required' => TRUE,
      );	
 	
 	/** location **/
 	
-  	$form['basic']['device_type'] = array(
+  	$form['field_dev_type'] = array(
     '#type' => 'select',
     '#title' => t('Device type'),
     '#required' => TRUE,
@@ -148,14 +120,8 @@ function form_example_tutorial_10($form_state) {
   	'#options' => get_Device_Type_list(),    
   );	
 	
-  $form['location'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Location'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,    
-  );
 		
-	$form['location']['city'] = array(
+	$form['city'] = array(
     '#type' => 'textfield',
     '#title' => t('City'),
     '#required' => TRUE,
@@ -164,7 +130,7 @@ function form_example_tutorial_10($form_state) {
     '#maxlength' => 64, // added
   );
 
-  	$form['location']['country'] = array(
+  	$form['country'] = array(
     '#type' => 'select',
     '#title' => t('Country'),
     '#required' => TRUE,
@@ -240,23 +206,40 @@ function get_Device_Type_list() {
 	  return $deviceTypeList;
 }
 
-
-
-
-/**
- * Modifies this function so that it will respond appropriately based on
- * which page was submitted. If the first page is being submitted,
- * values in the 'storage' array are saved and the form gets
- * automatically reloaded.
- *
- * If page 2 was submitted, we display a message and redirect the
- * user to another page.
- */
 function form_example_tutorial_10_submit($form, &$form_state) {
-	
+
 /**	    drupal_set_message(t('The form has been submitted. name="@first @last", year of birth=@year_of_birth',
       array('@first' => $page_one_values['first'], '@last' => $page_one_values['last'], '@year_of_birth' => $page_one_values['year_of_birth'])));
 **/	
-	drupal_set_message(t('The form has bee submitted'));
+	drupal_set_message(t('The form has been submitted'));
+	$params = $form_state['values'];
+	
+	/**TODO validate which is an integer **/
+	$numberOfCopies = $params['copies'];
+	
+	unset($params['copies']);
+	unset($params['form_id']);
+	unset($params['form_token']);
+	unset($params['form_build_id']);	
+	unset($params['submit']);
+	unset($params['op']);
+	/** TODO parse dates and locations **/
+	unset($params['city']);
+	unset($params['country']);
+	unset($params['date']);	
+	
+	
+	$arrayNIDs = array();
+	
+	drupal_set_message(t('List of form\'s NIDs '));
+	foreach (range(1, $numberOfCopies) as $number) {
+		$nid = save_laptop($form_state['values']);
+		$arrayNIDs[$number]=$nid;
+		drupal_set_message(t('@number -> @nid',array('@number' => $number,'@nid' => $nid)));
+		
+	}
+	
+	
+	#print_laptop($form_state['values']);
 
 }
