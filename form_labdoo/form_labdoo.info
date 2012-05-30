@@ -1,0 +1,7 @@
+
+name = Form labdoo
+description = Form API to automate the Labdoo tagging process.
+core = 6.x
+package = labdoo-api
+
+

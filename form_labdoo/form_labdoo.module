@@ -1,0 +1,27 @@
+<?php
+
+function form_labdoo_menu() {
+  $items['labdoo_api/form_labdoo'] = array(
+    'title' => t('Form Labdoo'),
+    'page callback' => 'form_labdoo_info',
+    'access callback' => TRUE,
+  );
+
+  $items['labdoo_api/form_labdoo/form_laptop'] = array(
+    'title' => 'Laptop form',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_laptop'),
+    'access callback' => TRUE,
+    'file' => 'form_labdoo.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Simple page callback to give feedback to the user about this example.
+ */
+function form_labdoo_info() {
+  return t('The Labdoo form provides a form to make easy to tag the Labdoo laptops');
+}
+

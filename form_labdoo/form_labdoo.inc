@@ -8,8 +8,9 @@ require_once('labdoo.inc');
  * Adds logic to our form builder to give it two pages. It checks a
  * value in $form_state['storage'] to determine if it should display page 2.
  */
-function form_example_tutorial_10($form_state) {
+function form_laptop($form_state) {
 
+/**TODO move fields in order to create a sorted form **/
   $form['description'] = array(
     '#type' => 'item',
     '#title' => t('Labdoo API - Laptop form'),
@@ -206,7 +207,7 @@ function get_Device_Type_list() {
 	  return $deviceTypeList;
 }
 
-function form_example_tutorial_10_submit($form, &$form_state) {
+function form_laptop_submit($form, &$form_state) {
 
 /**	    drupal_set_message(t('The form has been submitted. name="@first @last", year of birth=@year_of_birth',
       array('@first' => $page_one_values['first'], '@last' => $page_one_values['last'], '@year_of_birth' => $page_one_values['year_of_birth'])));
@@ -239,7 +240,4 @@ function form_example_tutorial_10_submit($form, &$form_state) {
 		
 	}
 	
-	
-	#print_laptop($form_state['values']);
-
 }

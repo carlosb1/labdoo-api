@@ -1,4 +1,6 @@
 <?php
+
+/**TODO move this package to a common module **/
 function save_laptop ($args) {
   	if (!$args) { return xmlrpc_error(1, t('I cannot create a laptop if you do not provide its parameters.')); }
 	//TODO Is it necessary to put these checkers? The signature specification provides the same feature
@@ -9,6 +11,8 @@ function save_laptop ($args) {
 	node_save($node); // After this call we'll get a nid	
 	return $node->nid;
 }
+
+
 
 function load_laptop($nid) {
  	$update_node = node_load($nid);
@@ -29,6 +33,12 @@ function delete_laptop ($nid) {
 	node_delete($nid);
 }
 
+function print_laptop ($args) {
+	foreach ($args as $name=>$value) {
+		drupal_set_message(t('name=@name value=@value',array('@name' => $name, '@value' => $value)));
+	}
+}
+
 function arrayToObject($array) {
     if(!is_array($array)) {
         return $array;
@@ -41,9 +51,9 @@ function arrayToObject($array) {
          if (!empty($name)) {
 	    //We will not use iterative arrays
             //$object->$name = arrayToObject($value);
-			$arrayValue= array();
-			$arrayValue[0]['value'] = $value;
-			$object->$name = $arrayValue;
+	$arrayValue= array();
+	$arrayValue[0]['value'] = $value;
+	$object->$name = $arrayValue;
          }
       }
       return $object; 
