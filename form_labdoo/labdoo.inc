@@ -8,8 +8,12 @@ function save_laptop ($args) {
 	$node = arrayToObject($args);
  	$node->uid = 1; 	
 	$node->type = "laptop"; // Or any other content type you want
-	node_save($node); // After this call we'll get a nid	
-	return $node->nid;
+	node_save($node); // After this call we'll get a nid
+
+	
+	print_laptop($node);
+		
+	return $node->value;
 }
 
 

@@ -25,16 +25,9 @@
 	</target>
 	
     <target name="remote-deploy" depends="remote-clean">
-    	<!-- TODO to remove -->
-    	<copy file="xmlrpc-server/xmlrpc.info.php" tofile="xmlrpc-server/xmlrpc.info"/>
-    	<copy file="xmlrpc-server/xmlrpc.module.php" tofile="xmlrpc-server/xmlrpc.module"/>
     	  <scp todir="root@${server.name}:${server.path}xmlrpc-server" keyfile="${client.key}">
     	  	<fileset dir="xmlrpc-server" />
     	  	</scp>
-		  <sshexec host="${server.name}"
-			username="root"
-			keyfile="${client.key}"
-			command="/etc/init.d/httpd restart"/>
     </target>
 	
 	<target name="remote-clean-form_labdoo">
@@ -69,7 +62,7 @@
     	  </scp>
     </target>	
 	
-    <target name="remote-restart" depends="remote-clean">
+    <target name="remote-restart">
 		  <sshexec host="${server.name}"
 			username="root"
 			keyfile="${client.key}"

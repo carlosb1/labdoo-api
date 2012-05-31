@@ -51,30 +51,6 @@ public class ClientTest {
 	}
 	
 
-	@Test
-	public void testUpdateLaptop() throws APIException {
-		String nid = "464";
-		Laptop newLaptop = client.getLaptop(nid);
-		log.info(newLaptop.toString());
-		
-	}
-	
-	
-	@Test
-	public void testSimpleLaptop() throws APIException {
-		String nid = "464";
-		Laptop newLaptop = client.getLaptop(nid);
-		log.info(newLaptop.toString());
-		
-	}
-	
-	
-	public void testCompleteLaptop() throws APIException {
-		String nid = "464";
-		Laptop newLaptop = client.getLaptop(nid);
-		log.info(newLaptop.toString());
-		
-	}
 	
 	
 	

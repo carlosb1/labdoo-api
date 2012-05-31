@@ -77,52 +77,33 @@ public class Laptop {
 	public final static String  DOMAIN_UCLA = "University of California, Los Angeles";
 	public final static String  DOMAIN_WCE = "World Computer Exchange, Boston";
 	
-	//field_status
 	private String status = "";
-// 	field_how_did_you_learn
 	private String howDidYouLearn = "";
-// 	//field_current_manager
 	//TODO TO TEST, It WOULD BE AN USER ACCOUNT
 	private String currentManager = "";
-// 	field_dev_type = $dev_type;
-	private String devType = "";
-	
-// 	//$newnode->field_date_received->date
+	private String devType = "";	
 	private Date dateReceived = null;
-// 	//$newnode->field_date_delivered->date
 	private Date dateDelivered = null;
-// 	//$newnode->field_date_recycled->date
 	private Date dateRecycled = null;	
-// 	//$newnode->field_available_day->date
 	private Date availableDay = null;
 
 // 	//$newnode->field_picture->NULL;
 // 	//$newnode->field_pic_deployed->NULL;	
-// field_model = $model;
 	private String model = "";
-// field_cpu integer
 	private int cpu = 0;
-// field_cpu_type 
 	private String cpuType = "";
-// field_memory integer
 	private int memory = 0;
-// field_hard_drive integer
 	private int hardDrive = 0;	
-//  field_current_os
 	private String currentOS = "";
-// 	field_destination
 	private String destination  = "";
-// 	field_501c3_recipient
 	private String a501c3Recip = "";
-// 	field_laptop_domain 
 	private String laptopDomain = "";
-// 	field_library_notification 
 	private String libraryNotification = "";
-// 	field_checkedout_location
 	private String checkedoutLocation = "";	
-// 	field_notes
 	private String notes = "";
 	private String nid = "";
+
+	private String id = "";	
 	
 	private HashMap<String,String> location = new HashMap<String,String>();
 
@@ -137,6 +118,14 @@ public class Laptop {
 	}
 
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -418,9 +407,10 @@ public class Laptop {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
+			if (key.equals("title"))
+				laptop.setId((String)params.get(key));
 
 			
-			//TODO ADD UID
 			if (key.equals("nid"))
 				laptop.setNid((String)params.get(key));
 
@@ -454,7 +444,7 @@ public class Laptop {
 				laptop.setHardDrive(((Integer)param).intValue());
 
 			if (key.equals("field_current_os"))
-				laptop.setNid((String)param);
+				laptop.setCurrentOS((String)param);
 
 			if (key.equals("field_destination"))
 				laptop.setDestination((String)param);
@@ -499,6 +489,8 @@ public class Laptop {
 		return laptop;
 	}
 	
+
+
 	private static Object hashValueToParam(Object drupalParam) throws APIException {
 			if (drupalParam instanceof Object[] && ((Object[])drupalParam).length >0) {
 				 Object arrayParam = ((Object[])drupalParam)[0];
@@ -526,7 +518,7 @@ public class Laptop {
 
 	@Override
 	public String toString() {
-		return "Laptop [status=" + status + ", howDidYouLearn="
+		return "Laptop [id="+id+", status=" + status + ", howDidYouLearn="
 				+ howDidYouLearn + ", currentManager=" + currentManager
 				+ ", devType=" + devType + ", model=" + model + ", cpu=" + cpu
 				+ ", cpuType=" + cpuType + ", memory=" + memory
