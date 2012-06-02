@@ -1,0 +1,5 @@
+name = Labdoo core module 
+description = Core project with the framework and operations to use the Labdoo API 
+core = 6.x
+package = labdoo-api
+

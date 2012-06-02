@@ -1,0 +1,11 @@
+<?php
+function labdoo_nodes_info() {
+  return array(
+    'labdoo_nodes' => array(
+      'name' => t('Labdoo nodes'),
+      'module' => 'labdoo_nodes',
+      'description' => t('Labdoo modules for implementation'),
+      'file' => 'labdoo.inc',
+    )
+  );
+}

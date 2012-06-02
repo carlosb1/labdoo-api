@@ -1,8 +1,6 @@
 <?php
 
-module_load_include('inc', 'content', 'includes/content.node_form');
-require_once('labdoo.inc');
-
+module_load_include('inc', 'labdoo_nodes', 'labdoo');
  
 /**
  * Adds logic to our form builder to give it two pages. It checks a

@@ -1,0 +1,73 @@
+<?php
+/** TODO Add dependencies among projects **/
+function form_labdoo_menu() {
+  $items['labdoo_api/form_labdoo'] = array(
+    'title' => t('Form Labdoo'),
+    'page callback' => 'form_labdoo_info',
+    'access callback' => TRUE,
+  );
+
+  $items['labdoo_api/form_labdoo/form_api'] = array(
+    'title' => 'Laptop form api',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_api_key'),
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+function form_api($form_state) {
+
+  $form['description'] = array(
+    '#type' => 'item',
+    '#title' => t('Labdoo API - Laptop API Key form'),
+  );
+
+
+  $form['api_key'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Name'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  );
+		
+	$form['api_key']['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#required' => TRUE,
+   # '#default_value' => "First name", // added default value.
+    '#size' => 64, // added
+    '#maxlength' => 64, // added
+  );
+
+  
+    $form['api_key']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+
+  return $form;
+}
+
+
+function form_laptop_submit($form, &$form_state) {
+	
+	global $user;
+	$account = user_load(array('uid'=>$node->uid));
+	$profile = profile_load_profile($account);
+
+	drupal_set_message(t('The form has been submitted'));
+	$params = $form_state['values'];
+	
+	
+	drupal_set_message(t('List of form\'s NIDs '));
+}
+
+function generateAPIKEY() {
+	
+	
+}
+
+
+

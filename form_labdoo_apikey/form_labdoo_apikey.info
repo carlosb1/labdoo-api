@@ -1,0 +1,8 @@
+
+name = Form labdoo APIKEY
+description = Form API to create API Keys to authenticate the Labdoo API
+core = 6.x
+package = labdoo-api
+
+
+
