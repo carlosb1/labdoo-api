@@ -107,6 +107,7 @@ public class Laptop {
 	
 	private HashMap<String,String> location = new HashMap<String,String>();
 
+
 	
 	
 	public static Laptop newSimpleLaptop () {

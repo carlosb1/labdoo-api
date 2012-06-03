@@ -1,23 +1,18 @@
 <?php
 /** TODO Add dependencies among projects **/
-function form_labdoo_menu() {
-  $items['labdoo_api/form_labdoo'] = array(
-    'title' => t('Form Labdoo'),
-    'page callback' => 'form_labdoo_info',
-    'access callback' => TRUE,
-  );
-
-  $items['labdoo_api/form_labdoo/form_api'] = array(
+function form_labdoo_apikey_menu() {
+	
+  $items['labdoo_api/form_labdoo/form_labdoo_apikey'] = array(
     'title' => 'Laptop form api',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('form_api_key'),
+    'page arguments' => array('form_labdoo_apikey'),
     'access callback' => TRUE,
   );
 
   return $items;
 }
 
-function form_api($form_state) {
+function form_labdoo_apikey($form_state) {
 
   $form['description'] = array(
     '#type' => 'item',
@@ -31,42 +26,89 @@ function form_api($form_state) {
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
-		
-	$form['api_key']['email'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Email'),
-    '#required' => TRUE,
-   # '#default_value' => "First name", // added default value.
-    '#size' => 64, // added
-    '#maxlength' => 64, // added
-  );
-
+	
+	
+	/**
+	 * TODO to test if it did not appear the email field
+	 */
+	global $user;
+	if ($user->uid == "1") {
+		$form['api_key']['email'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Email'),
+	    '#required' => TRUE,
+	   # '#default_value' => "First name", // added default value.
+	    '#size' => 64, // added
+	    '#maxlength' => 64, // added
+	  );
+	} 
   
     $form['api_key']['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
+  );
+  
+    $form['api_key']['clear'] = array(
+    '#type' => 'submit',
+    '#value' => 'Disable API key',
+    '#validate' => array('form_labdoo_apikey_clear'),
   );
 
   return $form;
 }
 
 
-function form_laptop_submit($form, &$form_state) {
-	
-	global $user;
-	$account = user_load(array('uid'=>$node->uid));
-	$profile = profile_load_profile($account);
 
+function form_labdoo_apikey_clear($form, &$form_state) {
+
+	if (isset($form_state['values']['email'])) {
+		$mail = $form_state['values']['email'];
+	} else {
+		$mail = $user->mail;
+	}	
+	
+	
+	$countRows = db_result(db_query('SELECT COUNT(*) FROM api_key where email like \'%s\'',$mail));
+	if ($countRows == 0) {
+			drupal_set_message(t('There is not any api key to remove for the email @email',array("@email"=>$mail)));
+	} else {
+			db_query('DELETE FROM api_key where email like \'%s\' ',$mail);
+			
+		  $countRows = db_result(db_query('SELECT COUNT(*) FROM api_key where email like \'%s\'',$mail));
+			drupal_set_message(t('The api key for the email @email was removed (status @status)!!',array("@email"=>$mail, "@status"=>$countRows)));
+	}
+	
+  $form_state['rebuild'] = TRUE;
+}
+
+function form_labdoo_apikey_submit($form, &$form_state) {
+ 	global $user;
+ 
 	drupal_set_message(t('The form has been submitted'));
-	$params = $form_state['values'];
+	if (isset($form_state['values']['email'])) {
+		$mail = $form_state['values']['email'];
+	} else {
+		$mail = $user->mail;
+	}
 	
+	$apiKey = generateAPIKEY();
+
+	$countRows = db_result(db_query('SELECT COUNT(*) FROM api_key where email like \'%s\'',$mail));
+	if ($countRows == 1) {
+		drupal_set_message(t('Deleting old API KEY'));
+		db_query('DELETE FROM api_key where email like \'%s\' ',$mail);
+	}
+	drupal_set_message(t('Saving your new API KEY'));
+	db_query('INSERT INTO api_key VALUES (MD5(\'%s\'),\'%s\',\'%s\',%d)',$apiKey,$user->name,$mail,$user->uid);				
+
+	drupal_set_message(t('<h2> API KEY: @key for @mail</h2>',array('@key' => $apiKey,'@mail' => $mail)));
 	
-	drupal_set_message(t('List of form\'s NIDs '));
+
+	/*drupal_set_message(t('List of form\'s NIDs ')); */
 }
 
 function generateAPIKEY() {
-	
-	
+	return md5(uniqid(rand(), true));
 }
 
 

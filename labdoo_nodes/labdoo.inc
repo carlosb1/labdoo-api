@@ -10,9 +10,6 @@ function save_laptop ($args) {
 	$node->type = "laptop"; // Or any other content type you want
 	node_save($node); // After this call we'll get a nid
 
-	
-	print_laptop($node);
-		
 	return $node->value;
 }
 
@@ -24,6 +21,7 @@ function load_laptop($nid) {
 }
 
 function update_laptop($args) {
+	if (!$args) { return xmlrpc_error(1, t('I cannot create a laptop if you do not provide its parameters.')); }	
 	 $update_node = node_load($nid);
       foreach ($args as $name=>$value) {
 			$arrayValue= array();
@@ -31,10 +29,13 @@ function update_laptop($args) {
 			$update_node->$name = $arrayValue;
       }
  	node_save($update_node);
+	return TRUE;
 }
 
 function delete_laptop ($nid) {
+  	if (!$nid) { return xmlrpc_error(1, t('I cannot delete a laptop if you do not  provide one.')); }	
 	node_delete($nid);
+	return TRUE;
 }
 
 function print_laptop ($args) {

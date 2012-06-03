@@ -28,8 +28,9 @@ public class LabdooClient {
 
 
 
-	final String md5Key = "5461de53468f45a435b99ae97c930f46";
-	final static String URL_LABDOO = "http://ec2-50-17-80-217.compute-1.amazonaws.com/labdoo/xmlrpc.php";	
+	final static String APIKEY = "5461de53468f45a435b99ae97c930f46";
+	final static String URL_LABDOO = "http://ec2-50-17-80-217.compute-1.amazonaws.com/labdoo/xmlrpc.php"
+			+"?APIKEY="+APIKEY;	
 	final Log log = LogFactory.getLog(LabdooClient.class);
 	
 	
@@ -50,6 +51,7 @@ public class LabdooClient {
 
 		
 	}
+	
 	/**
 	 * Method to test server
 	 * @throws APIException. It returns this exception if we find some error
