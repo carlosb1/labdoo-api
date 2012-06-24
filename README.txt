@@ -29,13 +29,8 @@ BUGS
 [] -> Include roadmap
 [] -> current manager xml response returns a user id, not an username
 [] -> check types in forms... 
-[x] -> Move and organize files in forms
 [] -> Add tests for date operations
 [] -> Manual PHP
-[] -> Añadir build en la API 
-[X] -> Organize form
-[ ] -> Probar API KEY
-[ ] -> 
 
 
 GETTING STARTED

@@ -1,3 +1,4 @@
+
 <project>
     <property name="src.dir" value="client"/>
     <property name="build.dir" value="bin"/>
@@ -5,18 +6,67 @@
     <property name="server.name" value="ec2-50-17-80-217.compute-1.amazonaws.com"/>
     <property name="server.path" value="/persistent/labdoo/sites/all/modules/"/>
 	<property name="client.key" value="/home/carlos/Desktop/toLabdoo/labdoo-dev.pem"/>
+	<property name="test.dir" location="tests" />
+	<property name="report.dir" value="${build.dir}/junitreport" />
+	
 	<property name="server.src_dir" value="xmlrpc-server"/>
-    <path id="classpath">
-        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+ 
+	<path id="classpath">
+		<pathelement path="${build.dir}" />
+    	<fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
-    <target name="clean">
+ 
+	<target name="clean">
         <delete dir="${build.dir}"/>
     </target>
-    <target name="compile">
+  
+	<target name="compile" depends="clean">
         <mkdir dir="${build.dir}"/>
         <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" />
+		<javac srcdir="${test.dir}" destdir="${build.dir}" includeantruntime="false" classpathref="classpath" />    	
     </target>
-	<!-- these commands have dependencies from http://www.jcraft.com/jsch/ -->
+	
+	<target name="test" depends="compile">
+		<mkdir dir="${report.dir}" />
+		<junit printsummary="yes" haltonfailure="yes" haltonerror="yes">
+			<classpath>
+				<path refid="classpath" />
+			</classpath>
+
+			<formatter type="xml" />
+			<batchtest fork="yes" todir="${report.dir}">
+				<fileset dir="${test.dir}" includes="**/*Test.java" />
+			</batchtest>
+		</junit>
+	</target>
+	
+    <target name="junitreport">
+        <junitreport todir="${report.dir}">
+            <fileset dir="${report.dir}" includes="TEST-*.xml"/>
+            <report todir="${report.dir}"/>
+        </junitreport>
+    </target>
+	
+	
+	
+	<!-- these commands have dependencies with http://www.jcraft.com/jsch/ -->
+	
+	<target name="remote-clean-nodes">
+		  <sshexec host="${server.name}"
+			username="root"
+			keyfile="${client.key}"
+			command="rm -rf /tmp/labdoo_nodes.old; mv -f ${server.path}labdoo_nodes /tmp/labdoo_nodes.old; mkdir ${server.path}labdoo_nodes"/>		
+	</target>		
+	
+	
+    <target name="remote-deploy-nodes" depends="remote-clean-nodes">
+    	  <scp todir="root@${server.name}:${server.path}labdoo_nodes" keyfile="${client.key}">
+    	  	<fileset dir="labdoo_nodes" />
+    	  	</scp>
+     </target>
+	
+	
+	
 	<target name="remote-clean">
 		  <sshexec host="${server.name}"
 			username="root"
@@ -24,7 +74,8 @@
 			command="rm -rf /tmp/xmlrpc-server.old; mv -f ${server.path}xmlrpc-server /tmp/xmlrpc-server.old; mkdir ${server.path}xmlrpc-server"/>		
 	</target>
 	
-    <target name="remote-deploy" depends="remote-clean">
+	
+    <target name="remote-deploy" depends="remote-clean,remote-deploy-nodes">
     	  <scp todir="root@${server.name}:${server.path}xmlrpc-server" keyfile="${client.key}">
     	  	<fileset dir="xmlrpc-server" />
     	  	</scp>
@@ -38,9 +89,6 @@
 	</target>	
 
     <target name="remote-deploy-form_labdoo" depends="remote-clean-form_labdoo">
-    	<!-- TODO to remove -->
-<!--    	<copy file="xmlrpc-server/xmlrpc.info.php" tofile="xmlrpc-server/xmlrpc.info"/>
-    	<copy file="xmlrpc-server/xmlrpc.module.php" tofile="xmlrpc-server/xmlrpc.module"/> -->
     	  <scp todir="root@${server.name}:${server.path}form_labdoo" keyfile="${client.key}">
     	  	<fileset dir="form_labdoo" />
     	  </scp>
@@ -54,9 +102,6 @@
 	</target>	
 
     <target name="remote-deploy-form_api" depends="remote-clean-form_api">
-    	<!-- TODO to remove -->
-<!--    	<copy file="xmlrpc-server/xmlrpc.info.php" tofile="xmlrpc-server/xmlrpc.info"/>
-    	<copy file="xmlrpc-server/xmlrpc.module.php" tofile="xmlrpc-server/xmlrpc.module"/> -->
     	  <scp todir="root@${server.name}:${server.path}form_labdoo_apikey" keyfile="${client.key}">
     	  	<fileset dir="form_labdoo_apikey" />
     	  </scp>
@@ -68,8 +113,6 @@
 			keyfile="${client.key}"
 			command="/etc/init.d/httpd restart"/>
     </target>	
-	
-
     <target name="remote-stop" depends="remote-clean">
 		  <sshexec host="${server.name}"
 			username="root"
@@ -77,5 +120,4 @@
 			command="/etc/init.d/httpd stop"/>
     </target>
 	
-
 </project>

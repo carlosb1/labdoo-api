@@ -1,14 +1,18 @@
 <?php
 function save_laptop ($args) {
+	watchdog('labdoo', 'Saving laptop!');
   	if (!$args) { return xmlrpc_error(1, t('I cannot create a laptop if you do not provide its parameters.')); }
 	//TODO Is it necessary to put these checkers? The signature specification provides the same feature
 	//if ($args && !is_array($args)) { $args = array($args);}
+
 	$node = arrayToObject($args);
  	$node->uid = 1; 	
 	$node->type = "laptop"; // Or any other content type you want
 	node_save($node); // After this call we'll get a nid
-
-	return $node->value;
+	
+	watchdog('labdoo', 'laptop created with value=%value',array('%value' => $node->title, WATCHDOG_ERROR));
+	if ("$node->title" == "") { return xmlrpc_error(2, t('I could not add the laptop, check sent parameters...')); }
+	return $node->title;
 }
 
 
@@ -38,7 +42,8 @@ function delete_laptop ($nid) {
 
 function print_laptop ($args) {
 	foreach ($args as $name=>$value) {
-		drupal_set_message(t('name=@name value=@value',array('@name' => $name, '@value' => $value)));
+		watchdog('labdoo', 'name=%name value=%value',array('%name' => $name, '%value' => $value, WATCHDOG_ERROR));
+		//watchdog('workflow', 'Request %request', array('%request' =>  $exploded["APIKEY"], WATCHDOG_ERROR));
 	}
 }
 

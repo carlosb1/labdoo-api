@@ -34,7 +34,15 @@ public class ClientTest {
 	
 	@Test
 	public void testAddRemoveLaptop() throws APIException {
-		String nid = client.addLaptop(Laptop.newSimpleLaptop());
+		Laptop laptop = Laptop.newSimpleLaptop();
+		laptop.setA501c3Recip("");
+		laptop.setCpu(1);
+		laptop.setCpuType(Laptop.CPU_FIVE);
+		laptop.setCurrentManager("carlos.baez");
+		laptop.setCurrentOS("");
+
+		String nid = client.addLaptop(laptop);
+		
 		log.info("Response test: "+nid);
 		boolean result = client.deleteLaptop(nid);
 		log.info("It was deleted: "+result);

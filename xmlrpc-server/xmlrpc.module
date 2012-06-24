@@ -75,7 +75,9 @@ function labdoo_xmlrpc() {
   }
   
   function xmls_laptop_add($args) {
-	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect')); } 		
+	watchdog('labdoo', 'Labdoo adding laptop...');
+	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect')); } 
+	watchdog('labdoo', 'The APIKEY is correct!...');	
   	return save_laptop ($args);
   }
 
