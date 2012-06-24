@@ -1,5 +1,6 @@
 <?php
 
+module_load_include('inc', 'content', 'includes/content.node_form');
 module_load_include('inc', 'labdoo_nodes', 'labdoo');
  
 /**
@@ -24,20 +25,30 @@ function form_laptop($form_state) {
     '#type' => 'textfield',
     '#title' => 'Number of laptops to tag',
      '#size' => 3, // added
-    '#maxlength' => 4, // added   
+    '#maxlength' => 4, // added      
   );	
+  
+  
+    $form['parameters'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Parameters'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    
+  );
   
   	/** Obligatory parameters **/ 
   	$field = content_fields('field_current_manager');
 	$form['#basic']['field_current_manager'] = $field;
-	$form += (array) content_field_form($form, $form_state, $field);
+	$form['parameters'] += (array) content_field_form($form, $form_state, $field);
 	
-    $form['field_current_manager'] = array(
+    $form['parameters']['field_current_manager'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
     '#title' => 'Current laptop manager',
      '#size' => 64, // added
     '#maxlength' => 64, // added
+	'#weight' => 1,
     '#description' => "Write here the user name of the person who is currently in charge of the laptop. 
     					If you are creating a new laptop, the system will assign by default your user name and you should not change that. 
     					If you are modifying this laptop and now you will be managing it, then you should overwrite this value with your user name.",
@@ -46,29 +57,31 @@ function form_laptop($form_state) {
   
 
 	
-  	$form['field_laptop_domain'] = array(
+  	$form['parameters']['field_laptop_domain'] = array(
     '#type' => 'select',
     '#title' => t('Domain'),
     '#required' => TRUE,
     # '#default_value' => variable_get('feed_item_length','teaser'),
   	'#options' => get_Domain_list(),    
+	'#weight' => 2,  	
   );
 	
 	
 	
 	$field = content_fields('field_current_manager');
 	$form['#basic']['field_current_manager'] = $field;
-	$form+= (array) content_field_form($form, $form_state, $field);
+	$form['parameters']+= (array) content_field_form($form, $form_state, $field);
 	
 	
 	/** laptop parameters  **/ 					
 	
-	 $form['field_cpu_type'] = array(
+	 $form['parameters']['field_cpu_type'] = array(
     '#type' => 'select',
     '#title' => t('Number of CPUs'),
     '#required' => FALSE,
     # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_CPU_Type_list(),    
+  	'#options' => get_CPU_Type_list(),
+	'#weight' => 4,  	
   	);
 	
 
@@ -76,71 +89,85 @@ function form_laptop($form_state) {
 
 	$field = content_fields('field_model');
 	$form['#basic']['field_model'] = $field;
-	$form+= (array) content_field_form($form, $form_state, $field);		
+	$form['parameters']+= (array) content_field_form($form, $form_state, $field);		
 		
 	$field = content_fields('field_memory');
 	$form['#basic']['field_memory'] = $field;
-	$form+= (array) content_field_form($form, $form_state, $field);	
+	$form['parameters']+= (array) content_field_form($form, $form_state, $field);	
 
 	$field = content_fields('field_cpu');
 	$form['#basic']['field_cpu'] = $field;
-	$form += (array) content_field_form($form, $form_state, $field);
+	$form['parameters'] += (array) content_field_form($form, $form_state, $field);
 	
 	
-  	$form['field_status'] = array(
+  	$form['parameters']['field_status'] = array(
     '#type' => 'select',
     '#title' => t('Status'),
     '#required' => TRUE,
     # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_Status_list(),    
+  	'#options' => get_Status_list(),
+	'#weight' => 3,  	
   );
 	
 
 	$field = content_fields('field_hard_drive');
 	$form['#basic']['field_hard_drive'] = $field;
-	$form += (array) content_field_form($form, $form_state, $field);
+	$form['parameters'] += (array) content_field_form($form, $form_state, $field);
 	
 	
 
-  $form['date'] = array(	
+  $form['parameters']['date'] = array(	
       '#type' => 'date', 
       '#title' => check_plain("Date"), 
       '#description' => "Date available",
       '#required' => TRUE,
+		'#weight' => 5,       
      );	
 	
 	/** location **/
 	
-  	$form['field_dev_type'] = array(
+  	$form['parameters']['field_dev_type'] = array(
     '#type' => 'select',
     '#title' => t('Device type'),
     '#required' => TRUE,
     # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_Device_Type_list(),    
+  	'#options' => get_Device_Type_list(),
+ 	'#weight' => 6,  	
   );	
 	
 		
-	$form['city'] = array(
+	$form['parameters']['city'] = array(
     '#type' => 'textfield',
     '#title' => t('City'),
     '#required' => TRUE,
    # '#default_value' => "First name", // added default value.
     '#size' => 64, // added
     '#maxlength' => 64, // added
-  );
+	'#weight' => 7, 
+      );
 
-  	$form['country'] = array(
+  	$form['parameters']['country'] = array(
     '#type' => 'select',
     '#title' => t('Country'),
     '#required' => TRUE,
     # '#default_value' => variable_get('feed_item_length','teaser'),
   	'#options' => location_get_iso3166_list(),    
-	
+	'#weight' => 8, 	
   );
   
-    $form['submit'] = array(
+  $form['buttons'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Buttons'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+ 	'#weight' => 20, 	   
+  );
+  
+  
+    $form['buttons']['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
+  
   );
 
   return $form;
@@ -213,8 +240,17 @@ function form_laptop_submit($form, &$form_state) {
 	drupal_set_message(t('The form has been submitted'));
 	$params = $form_state['values'];
 	
+	
 	/**TODO validate which is an integer **/
 	$numberOfCopies = $params['copies'];
+
+
+
+	$params['date']=normalize_date($params['date']);
+
+	
+	drupal_set_message(t('date :@date',array('@date' => $date)));
+
 	
 	unset($params['copies']);
 	unset($params['form_id']);
@@ -225,17 +261,25 @@ function form_laptop_submit($form, &$form_state) {
 	/** TODO parse dates and locations **/
 	unset($params['city']);
 	unset($params['country']);
-	unset($params['date']);	
 	
 	
 	$arrayNIDs = array();
 	
 	drupal_set_message(t('List of form\'s NIDs '));
 	foreach (range(1, $numberOfCopies) as $number) {
-		$nid = save_laptop($form_state['values']);
-		$arrayNIDs[$number]=$nid;
-		drupal_set_message(t('@number -> @nid',array('@number' => $number,'@nid' => $nid)));
+//		$nid = save_laptop($form_state['values']);
+//		$arrayNIDs[$number]=$nid;
+//		drupal_set_message(t('@number -> @nid',array('@number' => $number,'@nid' => $nid)));
 		
 	}
+	
+}
+
+function normalize_date($date) {
+	$day=$date['day'];
+	$month=$date['month'];
+	$year=$date['year'];
+	$date=$year."-".$month."-".$year."T00:00:00";
+	return $date;
 	
 }

@@ -75,46 +75,46 @@ function labdoo_xmlrpc() {
   }
   
   function xmls_laptop_add($args) {
-   	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect')); } 		
+	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect')); } 		
   	return save_laptop ($args);
   }
 
 
  function xmls_laptop_delete($nid) {
-   	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect')); }	
+ 	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect')); }	
 	return delete_laptop ($nid);
   }
 
- /*
- * Add functionalities. It has to update all possible parameters 
- */
  function xmls_laptop_update($args) {
-   	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect'));}		
+ 	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect'));}		
 	return update_laptop($args);
 }
 
- /*
- * Add functionalities. It has to update all possible parameters 
- */
+
  function xmls_laptop_get($nid) {
-  	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect'));}
+	if (!checkAPIKEY(getAPIKEY())) { return xmlrpc_error(2, t('The API KEY parameter is incorrect'));}
 	return load_laptop($nid);
 
  }
 
 function getAPIKEY(){
-	return filter_input(INPUT_GET, 'APIKEY', FILTER_DEFAULT, FILTER_FORCE_ARRAY | FILTER_FORCE_ARRAY);
+	
+	$exploded = array();
+	parse_str($_SERVER['QUERY_STRING'], $exploded);
+	//watchdog('workflow', 'Request %request', array('%request' =>  $exploded["APIKEY"], WATCHDOG_ERROR));
+	return  $exploded["APIKEY"];
 
 }
 
-function checkAPIKEY($apikey) {	
-	/** checkers to avoid unnecessary database calls **/
+function checkAPIKEY($apikey) {
+		/** checkers to avoid unnecessary database calls **/
+	
 	if ($apikey == "" or strlen($apikey) != 32) return False;
 	
 	$countRows = db_result(db_query('SELECT COUNT(*) FROM api_key where key_generated like \'%s\'',$apikey));
 	if ($countRows == 1) {
 		return True;
-	} else if ($countsRwos == 0){
+	} else if ($countsRows == 0){
 		return False;		
 	} else {
 		drupal_set_message(t("It was an error, the database is not wellformed: number of results for your query: @result",array("@result"=> $apikey)));

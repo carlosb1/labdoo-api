@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 
 import api.APIException;
 
-//TODO IMPLEMENT EQUALS AND TOSTRING!!
 public class Laptop {
 	
 	static final Log log = LogFactory.getLog(Laptop.class);
@@ -385,16 +384,11 @@ public class Laptop {
 		
 	}
 	
-	private static Date stringToDate(String dateToParse) {
+	private static Date stringToDate(String dateToParse) throws ParseException {
 		//2010-08-20T00:00:00
 		SimpleDateFormat dateFormater=new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
-		try {
-			return dateFormater.parse(dateToParse);
-		} catch (ParseException e) {
-			log.error(e);
-			//TODO change this, It is not good practices return null!
-			return null;
-		}		
+		return dateFormater.parse(dateToParse);
+	
 		
 		
 	}

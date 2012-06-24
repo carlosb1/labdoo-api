@@ -1,5 +1,4 @@
 <?php
-/** TODO Add dependencies among projects **/
 function form_labdoo_apikey_menu() {
 	
   $items['labdoo_api/form_labdoo/form_labdoo_apikey'] = array(

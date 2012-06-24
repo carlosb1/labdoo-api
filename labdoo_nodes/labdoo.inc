@@ -1,6 +1,4 @@
 <?php
-
-/**TODO move this package to a common module **/
 function save_laptop ($args) {
   	if (!$args) { return xmlrpc_error(1, t('I cannot create a laptop if you do not provide its parameters.')); }
 	//TODO Is it necessary to put these checkers? The signature specification provides the same feature

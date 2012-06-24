@@ -1,4 +1,3 @@
-import static org.junit.Assert.*;
 import junit.framework.Assert;
 
 import org.apache.commons.logging.Log;
@@ -55,10 +54,10 @@ public class ClientTest {
 	
 	
 	//TODO ADD TESTS AND DO JAVADOC
-//	
+	
 //	@Test
 //	public void testUpdateLaptop() throws APIException {
-//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop("demo"));
+//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop());
 //		laptop.setDescription("new description");
 //		Laptop updatedLaptop = client.updateLaptop(laptop);
 //		Assert.assertEquals("Laptops are not equals",laptop, updatedLaptop);
@@ -67,7 +66,7 @@ public class ClientTest {
 //	
 //	@Test
 //	public void testRemoveLaptop() throws APIException {
-//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop("demo"));
+//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop());
 //		client.removeLaptop(laptop.getId());
 //		Laptop removedLaptop = client.getLaptop(laptop.getId());	
 //		Assert.assertNotSame(Laptop.EMPTYLAPTOP,removedLaptop);

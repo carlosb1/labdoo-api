@@ -16,19 +16,15 @@ import api.resources.Laptop;
 public class LabdooClient {
 	
 	XmlRpcClient client;
-	//labdoo operations
 	final String ADDLAPTOP="labdoo.addLaptop";
 	final String DELETELAPTOP="labdoo.delLaptop";
 	final String UPDATELAPTOP="labdoo.updateLaptop";
 	final String GETLAPTOP="labdoo.getLaptop";
-	//test operations
 	final String HELLO = "remoteHello.hello";
-//	system.multicall', 'system.methodSignature', 'system.getCapabilities',
-//	'system.listMethods', 'system.methodHelp', 'remoteHello.hello
 
 
 
-	final static String APIKEY = "5461de53468f45a435b99ae97c930f46";
+	final static String APIKEY = "ce4086c02894c463355672af8210bb46";
 	final static String URL_LABDOO = "http://ec2-50-17-80-217.compute-1.amazonaws.com/labdoo/xmlrpc.php"
 			+"?APIKEY="+APIKEY;	
 	final Log log = LogFactory.getLog(LabdooClient.class);
@@ -108,7 +104,6 @@ public class LabdooClient {
 		}
 		
 	}
-	//TODO TO FINISH!
 	public Laptop getLaptop (String nid) throws APIException {
 		try{
 		 return Laptop.newInstance((Map)client.execute(GETLAPTOP,new Object [] {nid}));	
@@ -123,16 +118,6 @@ public class LabdooClient {
 		
 	}
 	
-//	
-//	public List<String> listIDLaptops()  throws APÎException {
-//		
-//		
-//		
-//		
-//	} 
-//	
-	
-
 
 }
 
