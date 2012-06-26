@@ -1,3 +1,23 @@
+/*
+ *  Labdoo API
+    Copyright (C) 2012  Labdoo team
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+import java.util.Date;
+
 import junit.framework.Assert;
 
 import org.apache.commons.logging.Log;
@@ -53,7 +73,49 @@ public class ClientTest {
 	public void testGetLaptop() throws APIException {
 		String nid = "464";
 		Laptop newLaptop = client.getLaptop(nid);
+		log.info(newLaptop.getId());
 		log.info(newLaptop.toString());
+		
+	}
+	
+	@Test
+	public void testDatesLaptop() throws APIException {
+		Laptop laptop = Laptop.newSimpleLaptop();
+		Date dateDelivered = new Date();
+		dateDelivered.setHours(12);
+		dateDelivered.setMinutes(45);
+		dateDelivered.setSeconds(10);
+		
+		dateDelivered.setMonth(3);
+		dateDelivered.setYear(2012);
+		
+		laptop.setDateDelivered(dateDelivered);
+		Date dateReceived = new Date();
+		dateReceived.setHours(1);
+		dateReceived.setMinutes(41);
+		dateReceived.setSeconds(10);
+		dateReceived.setMonth(5);
+		dateReceived.setYear(2012);
+		laptop.setDateReceived(dateReceived);
+		
+		Date dateRecycled = new Date();
+		dateRecycled.setHours(1);
+		dateRecycled.setMinutes(35);
+		dateRecycled.setSeconds(10);
+		dateRecycled.setMonth(4);
+		dateRecycled.setYear(2012);
+		laptop.setDateRecycled(dateRecycled);
+		String nid = client.addLaptop(laptop);
+		
+		//Check date laptop
+		
+		Laptop Laptop = client.getLaptop(nid);
+		log.info(laptop);
+		log.info("Response test: "+nid);
+		boolean result = client.deleteLaptop(nid);
+		log.info("It was deleted: "+result);		
+	
+		
 		
 	}
 	

@@ -13,24 +13,17 @@ BUGS
 ====
 
 [] -> Include wiki
-[] -> Include dependency generator
-[] -> Include license
 [] -> Include other type of hubs...
+[] -> Manual PHP
 [] -> PHP client
-[] -> Improve and refactorize form
 [] -> Add list Laptop
-[] -> Add ant build
-[X] -> Correct parsing of dates and location for the form_labdoo_apikey
-[] -> Check if it is necessary to use checker for xmlrpc operations, test it 
 [] -> Add unitary tests with fail cases
 [] -> Create Javadoc
 [] -> Test email submit for xmlrpc-client
-[] -> Fix problem to parse date and locations in form_labdoo_apikey module
 [] -> Include roadmap
 [] -> current manager xml response returns a user id, not an username
-[] -> check types in forms... 
-[] -> Add tests for date operations
-[] -> Manual PHP
+[] -> check types in forms... (number of copies)
+
 
 
 GETTING STARTED
