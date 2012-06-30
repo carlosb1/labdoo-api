@@ -19,8 +19,8 @@
 <project>
     <property name="src.dir" value="client"/>
     <property name="build.dir" value="bin"/>
-    <property name="lib.dir" value="libs"/>
-    <property name="server.name" value="ec2-50-17-80-217.compute-1.amazonaws.com"/>
+    <property name="lib.dir" value="libs"/>	
+    <property name="server.name" value="[add your params]"/>
     <property name="server.path" value="/persistent/labdoo/sites/all/modules/"/>
 	<property name="client.key" value="/home/carlos/Desktop/toLabdoo/labdoo-dev.pem"/>
 	<property name="test.dir" location="tests" />
