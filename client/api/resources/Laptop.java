@@ -191,7 +191,6 @@ public class Laptop {
 			if (key.equals("field_notes"))
 				laptop.setNotes((String) param);
 
-			// TODO TO TEST
 			if (key.equals("field_date_received")) {
 				try {
 					laptop.setDateReceived(stringToDate((String) param));
@@ -219,20 +218,11 @@ public class Laptop {
 				} catch (Exception e) {
 					log.error("It had a problem with the date recycled", e);
 				}
-				
+
 			}
 
 		}
 		return laptop;
-	}
-
-	// FIXME Refactorize, it is an unuseless function
-	public static Laptop newSimpleLaptop() {
-		Laptop laptop = new Laptop();
-		// laptop.uid = "1";
-		laptop.status = TAGGED_S0;
-		return laptop;
-
 	}
 
 	private static Date stringToDate(String dateToParse) throws ParseException {
@@ -546,7 +536,7 @@ public class Laptop {
 		if (!notes.equals(""))
 			params.put("field_notes", notes);
 
-		if (dateReceived != null) 
+		if (dateReceived != null)
 			params.put("field_date_received", dateToString(dateReceived));
 		if (dateDelivered != null)
 			params.put("field_date_delivered", dateToString(dateDelivered));

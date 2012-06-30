@@ -37,7 +37,7 @@ public class ClientTest {
 
 	@Before
 	public void setUp() throws Exception {
-		client = new LabdooClient();
+		client = new LabdooClient("http://dummy.test","asddadadasd999887");
 	}
 
 	@After
@@ -48,13 +48,13 @@ public class ClientTest {
 	@Test
 	public void testSayHello() throws APIException {
 		String response = client.sayHello();
-		Assert.assertEquals("Messages are not equals","Hello, carlos!", response);
 		
 	}
 	
 	@Test
 	public void testAddRemoveLaptop() throws APIException {
-		Laptop laptop = Laptop.newSimpleLaptop();
+		Laptop laptop = new Laptop();
+		laptop.setStatus(Laptop.TAGGED_S0);
 		laptop.setA501c3Recip("");
 		laptop.setCpu(1);
 		laptop.setCpuType(Laptop.CPU_FIVE);
@@ -63,9 +63,10 @@ public class ClientTest {
 
 		String nid = client.addLaptop(laptop);
 		
-		log.info("Response test: "+nid);
+//		log.info("Response test: "+nid);
 		boolean result = client.deleteLaptop(nid);
-		log.info("It was deleted: "+result);
+		Assert.assertTrue(result);		
+//		log.info("It was deleted: "+result);
 		
 	}
 	
@@ -73,14 +74,16 @@ public class ClientTest {
 	public void testGetLaptop() throws APIException {
 		String nid = "464";
 		Laptop newLaptop = client.getLaptop(nid);
-		log.info(newLaptop.getId());
-		log.info(newLaptop.toString());
+		Assert.assertEquals(null,newLaptop);
+//		log.info(newLaptop.getId());
+//		log.info(newLaptop.toString());
 		
 	}
 	
 	@Test
 	public void testDatesLaptop() throws APIException {
-		Laptop laptop = Laptop.newSimpleLaptop();
+		Laptop laptop = new Laptop();
+		laptop.setStatus(Laptop.TAGGED_S0);
 		Date dateDelivered = new Date();
 		dateDelivered.setHours(12);
 		dateDelivered.setMinutes(45);
@@ -110,38 +113,38 @@ public class ClientTest {
 		//Check date laptop
 		
 		Laptop Laptop = client.getLaptop(nid);
-		log.info(laptop);
-		log.info("Response test: "+nid);
+//		log.info(laptop);
+//		log.info("Response test: "+nid);
 		boolean result = client.deleteLaptop(nid);
-		log.info("It was deleted: "+result);		
+//		log.info("It was deleted: "+result);		
+		Assert.assertTrue(result);		
 	
 		
 		
 	}
 	
 
+
+	@Test
+	public void testUpdateLaptop() throws APIException {
+		Laptop laptop = new Laptop();
+		laptop.setStatus(Laptop.TAGGED_S0);
+		String nid = client.addLaptop(laptop);
+		boolean updated = client.updateLaptop(laptop);
+		Assert.assertTrue(updated);		
+			
+		//Check date laptop
+		
+		Laptop Laptop = client.getLaptop(nid);
+//		log.info(laptop);
+//		log.info("Response test: "+nid);
+		boolean result = client.deleteLaptop(nid);
+//		log.info("It was deleted: "+result);		
+		Assert.assertTrue(result);		
+		
+		
+	}	
 	
-	
-	
-	//TODO ADD TESTS AND DO JAVADOC
-	
-//	@Test
-//	public void testUpdateLaptop() throws APIException {
-//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop());
-//		laptop.setDescription("new description");
-//		Laptop updatedLaptop = client.updateLaptop(laptop);
-//		Assert.assertEquals("Laptops are not equals",laptop, updatedLaptop);
-//		
-//	}
-//	
-//	@Test
-//	public void testRemoveLaptop() throws APIException {
-//		Laptop laptop = client.addLaptop(Laptop.newSimpleLaptop());
-//		client.removeLaptop(laptop.getId());
-//		Laptop removedLaptop = client.getLaptop(laptop.getId());	
-//		Assert.assertNotSame(Laptop.EMPTYLAPTOP,removedLaptop);
-//		
-//	}
 	
 
 }

@@ -34,28 +34,20 @@ import api.resources.Laptop;
 
 public class LabdooClient {
 	
-	XmlRpcClient client;
-	final String ADDLAPTOP="labdoo.addLaptop";
-	final String DELETELAPTOP="labdoo.delLaptop";
-	final String UPDATELAPTOP="labdoo.updateLaptop";
-	final String GETLAPTOP="labdoo.getLaptop";
-	final String HELLO = "remoteHello.hello";
+	private XmlRpcClient client;
+	private final String ADDLAPTOP="labdoo.addLaptop";
+	private final String DELETELAPTOP="labdoo.delLaptop";
+	private final String UPDATELAPTOP="labdoo.updateLaptop";
+	private final String GETLAPTOP="labdoo.getLaptop";
+	private final String HELLO = "remoteHello.hello";
 
-
-
-	final static String APIKEY = "ce4086c02894c463355672af8210bb46";
-	final static String URL_LABDOO = "http://ec2-50-17-80-217.compute-1.amazonaws.com/labdoo/xmlrpc.php"
-			+"?APIKEY="+APIKEY;	
-	final Log log = LogFactory.getLog(LabdooClient.class);
+	private final Log log = LogFactory.getLog(LabdooClient.class);	
 	
-	
-	
-	
-	public LabdooClient () throws APIException {
+	public LabdooClient (String url, String apikey) throws APIException {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 	    client = new XmlRpcClient();
 	    try {
-			config.setServerURL(new URL(URL_LABDOO));
+			config.setServerURL(new URL(url+"?APIKEY="+apikey));
 		} catch (MalformedURLException e) {
 			log.error(e.getMessage());			
 			APIException apiException = new APIException();
