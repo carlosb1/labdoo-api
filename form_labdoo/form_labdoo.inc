@@ -283,16 +283,22 @@ function form_laptop_submit($form, &$form_state) {
 	
 	$arrayNIDs = array();
 	
-	drupal_set_message(t('List of form\'s NIDs '));
+	drupal_set_message(t('List of form\'s titles '));
 	foreach (range(1, $numberOfCopies) as $number) {
-//		$nid = save_laptop($form_state['values']);
-//		$arrayNIDs[$number]=$nid;
-//		drupal_set_message(t('@number -> @nid',array('@number' => $number,'@nid' => $nid)));
+		$nid = save_laptop($form_state['values']);
+		$node = get_laptop($nid);
+		drupal_set_message(t('laptop @number -> @title',array('@number' => $number,'@title' => $node['title'])));
 		
 	}
 	
 }
 
+function form_laptop_validate($form, &$form_state) {
+  if (!is_int($form_state['values']['copy']['copies'])) {
+      form_set_error('copies', t('Please enter an integer number.'));
+  }
+
+}
 function normalize_date($date) {
 	$day=$date['day'];
 	$month=$date['month'];

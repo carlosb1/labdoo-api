@@ -19,7 +19,7 @@
  * 
  */
 function save_laptop ($args) {
-	watchdog('labdoo', 'Saving laptop!');
+	//watchdog('labdoo', 'Saving laptop!');
   	if (!$args) { return xmlrpc_error(1, t('I cannot create a laptop if you do not provide its parameters.')); }
 	//TODO Is it necessary to put these checkers? The signature specification provides the same feature
 	//if ($args && !is_array($args)) { $args = array($args);}
@@ -29,7 +29,7 @@ function save_laptop ($args) {
 	$node->type = "laptop"; // Or any other content type you want
 	node_save($node); // After this call we'll get a nid
 	
-	watchdog('labdoo', 'laptop created with value=%value',array('%value' => $node->title, WATCHDOG_ERROR));
+	//watchdog('labdoo', 'laptop created with value=%value',array('%value' => $node->title, WATCHDOG_ERROR));
 	if ("$node->title" == "") { return xmlrpc_error(2, t('I could not add the laptop, check sent parameters...')); }
 	return $node->nid;
 }

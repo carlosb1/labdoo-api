@@ -26,6 +26,9 @@ class labdoo_client extends xmlrpc_client {
 	 public function delLaptop($nid) {
 	 	return $this->call("labdoo.delLaptop",$params);
 	 }
+	 	 public function getLaptop($nid) {
+	 	return $this->call("labdoo.getLaptop",$params);
+	 }
 	 
 	 public function updateLaptop($params) {
 	 	return $this->call("labdoo.updateLaptop",$params);
