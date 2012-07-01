@@ -1,11 +1,4 @@
 author: Carlos Báez Ruiz 
-README.TXT
-
-BUGS AND FEATURES FOR NEXT VERSIONS
-===================================
-
-[] -> check types in forms... (number of copies)
-
 
 NEXT FEATURES
 =============
