@@ -3,6 +3,8 @@ author: Carlos Báez Ruiz
 NEXT FEATURES
 =============
 
+[] -> Get access token
+[] -> Integrate with doopoints
 
 [] -> Include other node types f.e:  hubs, trips...
 [] -> Add list Laptop operation
