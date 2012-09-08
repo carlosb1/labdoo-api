@@ -35,13 +35,13 @@ function facebook_stats_menu() {
 
 function facebook_stats_simple() {
   $ranking = getStadistics ();
-  output = "<table border=\"1\">";
-  output.="<tr><th>Likes</th><th>Names</th><th>IDs</th></tr>";
+  $output = "<table border=\"1\">";
+ $output.="<tr><th>Likes</th><th>Names</th><th>IDs</th></tr>";
   foreach($ranking as $key => $value)
   {
-  	output.="<tr><th>".value[0]."</th><th>".value[1]."</th><th>".$key."</th></tr><p/>";
+  	$output.="<tr><th>".$value[0]."</th><th>".$value[1]."</th><th>".$key."</th></tr><p/>";
   }
-  output.="</table>";
+  $output.="</table>";
   return '<p>' .output . '</p>';
 }
 

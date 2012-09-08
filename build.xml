@@ -20,7 +20,7 @@
     <property name="src.dir" value="client"/>
     <property name="build.dir" value="bin"/>
     <property name="lib.dir" value="libs"/>	
-    <property name="server.name" value="[add your params]"/>
+    <property name="server.name" value="server"/>
     <property name="server.path" value="/persistent/labdoo/sites/all/modules/"/>
 	<property name="client.key" value="/home/carlos/Desktop/toLabdoo/labdoo-dev.pem"/>
 	<property name="test.dir" location="tests" />
@@ -123,7 +123,21 @@
     	  	<fileset dir="form_labdoo_apikey" />
     	  </scp>
     </target>	
-	
+
+    	<target name="remote-clean-facebook_stats">
+		  <sshexec host="${server.name}"
+			username="root"
+			keyfile="${client.key}"
+			command="rm -rf /tmp/facebook_stats_like.old; mv -f ${server.path}facebook_stats_like /tmp/facebook_stats_like.old; mkdir ${server.path}facebook_stats_like"/>		
+	</target>	
+
+    <target name="remote-deploy-facebook_stats" depends="remote-clean-facebook_stats">
+    	  <scp todir="root@${server.name}:${server.path}facebook_stats_like" keyfile="${client.key}">
+    	  	<fileset dir="facebook_stats_like" />
+    	  </scp>
+    </target>	
+    
+    	
     <target name="remote-restart">
 		  <sshexec host="${server.name}"
 			username="root"
@@ -136,5 +150,10 @@
 			keyfile="${client.key}"
 			command="/etc/init.d/httpd stop"/>
     </target>
+    <!-- 
+    <propertyfile file="my.properties">
+  <entry  key="abc" value="${abc}"/>
+</propertyfile>
+     -->
 	
 </project>

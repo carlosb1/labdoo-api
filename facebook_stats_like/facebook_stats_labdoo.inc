@@ -26,7 +26,7 @@ require_once('jsonpath.php');
 function getStadistics () {
 
 	$parser = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
-	$url = "https://graph.facebook.com/Labdoo/posts?access_token=&";
+	$url = "https://graph.facebook.com/Labdoo/posts?access_token=[token]";
 	
 	$continue = true;
 	$ranking = array();
