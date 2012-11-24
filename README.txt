@@ -3,8 +3,11 @@ author: Carlos Báez Ruiz
 NEXT FEATURES
 =============
 
-[] -> Get access token
+[] -> Create user facebook to get acces_token
 [] -> Integrate with doopoints
+[] -> Configure permissions
+[] -> Correct encoding
+[] -> Update documentation
 
 [] -> Include other node types f.e:  hubs, trips...
 [] -> Add list Laptop operation
