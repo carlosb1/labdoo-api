@@ -47,7 +47,7 @@ public class ClientTest {
 
 	@Test
 	public void testSayHello() throws APIException {
-		String response = client.sayHello();
+		client.sayHello();
 		
 	}
 	
@@ -112,7 +112,7 @@ public class ClientTest {
 		
 		//Check date laptop
 		
-		Laptop Laptop = client.getLaptop(nid);
+//		Laptop laptop = client.getLaptop(nid);
 //		log.info(laptop);
 //		log.info("Response test: "+nid);
 		boolean result = client.deleteLaptop(nid);
@@ -135,7 +135,7 @@ public class ClientTest {
 			
 		//Check date laptop
 		
-		Laptop Laptop = client.getLaptop(nid);
+//		Laptop Laptop = client.getLaptop(nid);
 //		log.info(laptop);
 //		log.info("Response test: "+nid);
 		boolean result = client.deleteLaptop(nid);

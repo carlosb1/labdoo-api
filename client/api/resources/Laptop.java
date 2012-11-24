@@ -32,7 +32,8 @@ import org.apache.commons.logging.LogFactory;
 import api.APIException;
 
 public class Laptop {
-
+	static final Log log = LogFactory.getLog(Laptop.class);
+	
 	public final static String ASSIGNED_S3 = "Assigned to a child, waiting to be shipped (S3)";
 
 	public final static String AVAILABLE_S8 = "(Library) Available (S8)";
@@ -68,7 +69,7 @@ public class Laptop {
 	public final static String FROM_HUB = "I belong to a Labdoo hub";
 	public final static String FROM_INTERNET = "From the Internet";
 	public final static String FROM_UCI_BOOKSTORE = "From the UCI bookstore";
-	static final Log log = LogFactory.getLog(Laptop.class);
+	
 
 	public final static String NULL = "null";
 	public final static String PASSED_QUALITY_ASSURANCE_S2 = "Passed quality assurance (S2)";

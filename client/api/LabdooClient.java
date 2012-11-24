@@ -20,7 +20,6 @@
 package api;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -45,8 +44,8 @@ public class LabdooClient {
 	
 	public LabdooClient (String url, String apikey) throws APIException {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-	    client = new XmlRpcClient();
-	    try {
+		client = new XmlRpcClient();
+		try {
 			config.setServerURL(new URL(url+"?APIKEY="+apikey));
 		} catch (MalformedURLException e) {
 			log.error(e.getMessage());			
@@ -54,7 +53,7 @@ public class LabdooClient {
 			apiException.initCause(e.getCause());
 			throw apiException;			
 		}
-	    client.setConfig(config);
+		client.setConfig(config);
 
 		
 	}
@@ -124,9 +123,6 @@ public class LabdooClient {
 				apiException.initCause(e.getCause());
 				throw apiException;	
 		}
-
-		
-		
 	}
 	
 
