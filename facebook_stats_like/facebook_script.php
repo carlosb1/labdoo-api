@@ -43,9 +43,10 @@ while ($continue) {
 	$content = file_get_contents($url);
 
 	$o = $parser->decode($content);
-	$likes = jsonPath($o, "$..likes.data[-1:]");
+	$likes = jsonPath($o, "$..likes.data[:]");
 	
 	foreach ($likes as $like) {
+		echo $like["name"]."\n";
 		if (array_key_exists($like["id"],$ranking)) {
 			$ranking[$like["id"]][0]++;
 		}	else {
