@@ -23,15 +23,23 @@ function form_labdoo_apikey_menu() {
   $items['labdoo_api/form_labdoo/form_labdoo_apikey'] = array(
     'title' => 'Laptop form api',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('form_labdoo_apikey'),
-    'access callback' => TRUE,
+    'page arguments' => array('laptop form api'),
+    'access arguments' => array('laptop form api'),
+    'access callback' => 'user_access'
   );
 
   return $items;
 }
 
+function form_labdoo_apikey_perm(){
+	return array('laptop form api');
+}
+
+
 function form_labdoo_apikey($form_state) {
 
+if (user_access('laptop form api')){
+	  // delete stuff
   $form['description'] = array(
     '#type' => 'item',
     '#title' => t('Labdoo API - Laptop API Key form'),
@@ -60,19 +68,23 @@ function form_labdoo_apikey($form_state) {
 	    '#maxlength' => 64, // added
 	  );
 	} 
+	  
+	    $form['api_key']['submit'] = array(
+	    '#type' => 'submit',
+	    '#value' => 'Submit',
+	  );
   
-    $form['api_key']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-  );
-  
-    $form['api_key']['clear'] = array(
-    '#type' => 'submit',
-    '#value' => 'Disable API key',
-    '#validate' => array('form_labdoo_apikey_clear'),
-  );
+	    $form['api_key']['clear'] = array(
+	    '#type' => 'submit',
+	    '#value' => 'Disable API key',
+	    '#validate' => array('form_labdoo_apikey_clear'),
+	  );
 
-  return $form;
+	  return $form;
+
+	} else {
+	  drupal_access_denied();
+	}
 }
 
 
