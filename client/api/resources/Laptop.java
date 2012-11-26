@@ -191,6 +191,11 @@ public class Laptop {
 
 			if (key.equals("field_notes"))
 				laptop.setNotes((String) param);
+			
+			//field_laptop_serial_number			
+			if (key.equals("field_laptop_serial_number")) 
+				laptop.setSerialNumber((String) param);
+
 
 			if (key.equals("field_date_received")) {
 				try {
@@ -221,10 +226,13 @@ public class Laptop {
 				}
 
 			}
+			
+			
 
 		}
 		return laptop;
 	}
+
 
 	private static Date stringToDate(String dateToParse) throws ParseException {
 		// 2010-08-20T00:00:00
@@ -270,6 +278,8 @@ public class Laptop {
 	private String notes = "";
 
 	private String status = "";
+
+	private String serialNumber;
 
 	public String getA501c3Recip() {
 		return a501c3Recip;
@@ -361,6 +371,10 @@ public class Laptop {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public String getSerialNumber() {
+		return serialNumber;
 	}
 
 	public Laptop setA501c3Recip(String a501c3Recip) {
@@ -499,7 +513,12 @@ public class Laptop {
 		return this;
 
 	}
-
+	
+	private void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+		
+	}
+	
 	public Map<String, Object> toMap() {
 		Map<String, Object> params = new HashMap<String, Object>();
 
@@ -536,7 +555,9 @@ public class Laptop {
 			params.put("field_checkedout_location", checkedoutLocation);
 		if (!notes.equals(""))
 			params.put("field_notes", notes);
-
+		if (!serialNumber.equals(""))
+			params.put("field_laptop_serial_number", serialNumber);
+		
 		if (dateReceived != null)
 			params.put("field_date_received", dateToString(dateReceived));
 		if (dateDelivered != null)
@@ -552,7 +573,7 @@ public class Laptop {
 
 	@Override
 	public String toString() {
-		return "Laptop [a501c3Recip=" + a501c3Recip + ", availableDay="
+		return "Laptop [serialNumber="+serialNumber+", a501c3Recip=" + a501c3Recip + ", availableDay="
 				+ availableDay + ", checkedoutLocation=" + checkedoutLocation
 				+ ", cpu=" + cpu + ", cpuType=" + cpuType + ", currentManager="
 				+ currentManager + ", currentOS=" + currentOS
