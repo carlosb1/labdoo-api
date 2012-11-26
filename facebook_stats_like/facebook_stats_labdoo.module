@@ -32,12 +32,25 @@ function facebook_stats_labdoo_menu() {
 }
 
 function facebook_stats_labdoo_simple() {
+
+	$config = parse_ini_file("config.ini");
 	$limit = 100;
-	$query = db_query("SELECT f.id, f.name, f.hits  FROM {facebook_ranking} f ORDER BY f.hits DESC LIMIT %d", $limit);    
+
+
+	$user_db=$config['user_db'];
+	$pass_db=$config['pass_db'];
+	$name_db=$config['name_db'];
+	$link = mysql_connect('127.0.0.1',$user_db, $pass_db) or die('I could not connect: ' . mysql_error());
 	
+	mysql_select_db($name_db) or die('I could not use the database '.$name_db);
+	
+	$query = "SELECT f.id, f.name, f.hits  FROM facebook_ranking f ORDER BY f.hits DESC LIMIT ".$limit;   
+	 
+	$result = mysql_query($query) or die('Failed query: ' . mysql_error());
+		
 	$output = "<table border=\"1\">";
 	$output.="<tr><th><h3>Likes</h3></th><th><h3>Names</h3></th></tr>";
-	while ($row = db_fetch_array($query)) { // this returns the row as an array, use db_fetch_object to get an object
+	while ($row = mysql_fetch_array($result)) { // this returns the row as an array, use db_fetch_object to get an object
 	 	$output.="<tr><td>".$row["hits"]."</td><td>".$row["name"]."</td></tr>";
 	}
 
