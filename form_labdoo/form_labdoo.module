@@ -23,19 +23,25 @@ function form_labdoo_menu() {
   $items['labdoo_api/form_labdoo'] = array(
     'title' => t('Form Labdoo'),
     'page callback' => 'form_labdoo_info',
-    'access callback' => TRUE,
   );
 
   $items['labdoo_api/form_labdoo/form_laptop'] = array(
     'title' => 'Laptop form',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('form_laptop'),
-    'access callback' => TRUE,
+    'access arguments' => array('laptop form'),
+    'access callback' => 'user_access',
     'file' => 'form_labdoo.inc',
   );
 
   return $items;
 }
+
+
+function form_labdoo_perm(){
+	return array('laptop form');
+}
+
 
 /**
  * Simple page callback to give feedback to the user about this example.

@@ -26,167 +26,176 @@ module_load_include('inc', 'labdoo_nodes', 'labdoo');
  * value in $form_state['storage'] to determine if it should display page 2.
  */
 function form_laptop($form_state) {
+	if (user_access('laptop form')){
 
-/**TODO move fields in order to create a sorted form **/
-  $form['description'] = array(
-    '#type' => 'item',
-    '#title' => t('Labdoo API - Laptop form'),
-  );
-
-
-    $form['copy'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Copy parameters'),
-  );
-  
-    $form['copy']['copies'] = array(
-    '#type' => 'textfield',
-    '#title' => 'Number of laptops to tag',
-     '#size' => 3, // added
-    '#maxlength' => 4, // added      
-  );	
-  
-  
-    $form['parameters'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Parameters'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    
-  );
-  
-  	/** Obligatory parameters **/ 
-  	$field = content_fields('field_current_manager');
-	$form['#basic']['field_current_manager'] = $field;
-	$form['parameters'] += (array) content_field_form($form, $form_state, $field);
-	
-    $form['parameters']['field_current_manager'] = array(
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#title' => 'Current laptop manager',
-     '#size' => 64, // added
-    '#maxlength' => 64, // added
-	'#weight' => 1,
-    '#description' => "Write here the user name of the person who is currently in charge of the laptop. 
-    					If you are creating a new laptop, the system will assign by default your user name and you should not change that. 
-    					If you are modifying this laptop and now you will be managing it, then you should overwrite this value with your user name.",
-       
-  );	
-  
-
-	
-  	$form['parameters']['field_laptop_domain'] = array(
-    '#type' => 'select',
-    '#title' => t('Domain'),
-    '#required' => TRUE,
-    # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_Domain_list(),    
-	'#weight' => 2,  	
-  );
+	/**TODO move fields in order to create a sorted form **/
+	  $form['description'] = array(
+	    '#type' => 'item',
+	    '#title' => t('Labdoo API - Laptop form'),
+	  );
 	
 	
-	
-	$field = content_fields('field_current_manager');
-	$form['#basic']['field_current_manager'] = $field;
-	$form['parameters']+= (array) content_field_form($form, $form_state, $field);
-	
-	
-	/** laptop parameters  **/ 					
-	
-	 $form['parameters']['field_cpu_type'] = array(
-    '#type' => 'select',
-    '#title' => t('Number of CPUs'),
-    '#required' => FALSE,
-    # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_CPU_Type_list(),
-	'#weight' => 4,  	
-  	);
-	
-
-	/** labdoo parameters  **/ 
-
-	$field = content_fields('field_model');
-	$form['#basic']['field_model'] = $field;
-	$form['parameters']+= (array) content_field_form($form, $form_state, $field);		
+	    $form['copy'] = array(
+	    '#type' => 'fieldset',
+	    '#title' => t('Copy parameters'),
+	  );
+	  
+	    $form['copy']['copies'] = array(
+	    '#type' => 'textfield',
+	    '#title' => 'Number of laptops to tag',
+	     '#size' => 3, // added
+	    '#maxlength' => 4, // added      
+	  );	
+	  
+	  
+	    $form['parameters'] = array(
+	    '#type' => 'fieldset',
+	    '#title' => t('Parameters'),
+	    '#collapsible' => TRUE,
+	    '#collapsed' => FALSE,
+	    
+	  );
+	  
+	  	/** Obligatory parameters **/ 
+	  	$field = content_fields('field_current_manager');
+		$form['#basic']['field_current_manager'] = $field;
+		$form['parameters'] += (array) content_field_form($form, $form_state, $field);
 		
-	$field = content_fields('field_memory');
-	$form['#basic']['field_memory'] = $field;
-	$form['parameters']+= (array) content_field_form($form, $form_state, $field);	
-
-	$field = content_fields('field_cpu');
-	$form['#basic']['field_cpu'] = $field;
-	$form['parameters'] += (array) content_field_form($form, $form_state, $field);
-	
-	
-  	$form['parameters']['field_status'] = array(
-    '#type' => 'select',
-    '#title' => t('Status'),
-    '#required' => TRUE,
-    # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_Status_list(),
-	'#weight' => 3,  	
-  );
-	
-
-	$field = content_fields('field_hard_drive');
-	$form['#basic']['field_hard_drive'] = $field;
-	$form['parameters'] += (array) content_field_form($form, $form_state, $field);
-	
-	
-
-  $form['parameters']['date'] = array(	
-      '#type' => 'date', 
-      '#title' => check_plain("Date"), 
-      '#description' => "Date available",
-      '#required' => TRUE,
-		'#weight' => 5,       
-     );	
-	
-	/** location **/
-	
-  	$form['parameters']['field_dev_type'] = array(
-    '#type' => 'select',
-    '#title' => t('Device type'),
-    '#required' => TRUE,
-    # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => get_Device_Type_list(),
- 	'#weight' => 6,  	
-  );	
+	    $form['parameters']['field_current_manager'] = array(
+	    '#type' => 'textfield',
+	    '#required' => TRUE,
+	    '#title' => 'Current laptop manager',
+	     '#size' => 64, // added
+	    '#maxlength' => 64, // added
+		'#weight' => 1,
+	    '#description' => "Write here the user name of the person who is currently in charge of the laptop. 
+	    					If you are creating a new laptop, the system will assign by default your user name and you should not change that. 
+	    					If you are modifying this laptop and now you will be managing it, then you should overwrite this value with your user name.",
+	       
+	  );	
+	  
 	
 		
-	$form['parameters']['city'] = array(
-    '#type' => 'textfield',
-    '#title' => t('City'),
-    '#required' => TRUE,
-   # '#default_value' => "First name", // added default value.
-    '#size' => 64, // added
-    '#maxlength' => 64, // added
-	'#weight' => 7, 
-      );
-
-  	$form['parameters']['country'] = array(
-    '#type' => 'select',
-    '#title' => t('Country'),
-    '#required' => TRUE,
-    # '#default_value' => variable_get('feed_item_length','teaser'),
-  	'#options' => location_get_iso3166_list(),    
-	'#weight' => 8, 	
-  );
-  
-  $form['buttons'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Buttons'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
- 	'#weight' => 20, 	   
-  );
-  
-  
-    $form['buttons']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-  
-  );
+	  	$form['parameters']['field_laptop_domain'] = array(
+	    '#type' => 'select',
+	    '#title' => t('Domain'),
+	    '#required' => TRUE,
+	    # '#default_value' => variable_get('feed_item_length','teaser'),
+	  	'#options' => get_Domain_list(),    
+		'#weight' => 2,  	
+	  );
+		
+		
+		
+		$field = content_fields('field_current_manager');
+		$form['#basic']['field_current_manager'] = $field;
+		$form['parameters']+= (array) content_field_form($form, $form_state, $field);
+		
+		
+		/** laptop parameters  **/ 					
+		
+		 $form['parameters']['field_cpu_type'] = array(
+	    '#type' => 'select',
+	    '#title' => t('Number of CPUs'),
+	    '#required' => FALSE,
+	    # '#default_value' => variable_get('feed_item_length','teaser'),
+	  	'#options' => get_CPU_Type_list(),
+		'#weight' => 4,  	
+	  	);
+		
+	
+		/** labdoo parameters  **/ 
+	
+		$field = content_fields('field_model');
+		$form['#basic']['field_model'] = $field;
+		$form['parameters']+= (array) content_field_form($form, $form_state, $field);		
+			
+		$field = content_fields('field_memory');
+		$form['#basic']['field_memory'] = $field;
+		$form['parameters']+= (array) content_field_form($form, $form_state, $field);	
+	
+		$field = content_fields('field_cpu');
+		$form['#basic']['field_cpu'] = $field;
+		$form['parameters'] += (array) content_field_form($form, $form_state, $field);
+	
+	
+		$field = content_fields('field_laptop_serial_number');
+		$form['#basic']['field_laptop_serial_number'] = $field;
+		$form['parameters'] += (array) content_field_form($form, $form_state, $field);
+		
+		
+	  	$form['parameters']['field_status'] = array(
+	    '#type' => 'select',
+	    '#title' => t('Status'),
+	    '#required' => TRUE,
+	    # '#default_value' => variable_get('feed_item_length','teaser'),
+	  	'#options' => get_Status_list(),
+		'#weight' => 3,  	
+	  );
+		
+	
+		$field = content_fields('field_hard_drive');
+		$form['#basic']['field_hard_drive'] = $field;
+		$form['parameters'] += (array) content_field_form($form, $form_state, $field);
+		
+		
+	
+	  $form['parameters']['date'] = array(	
+	      '#type' => 'date', 
+	      '#title' => check_plain("Date"), 
+	      '#description' => "Date available",
+	      '#required' => TRUE,
+			'#weight' => 5,       
+	     );	
+		
+		/** location **/
+		
+	  	$form['parameters']['field_dev_type'] = array(
+	    '#type' => 'select',
+	    '#title' => t('Device type'),
+	    '#required' => TRUE,
+	    # '#default_value' => variable_get('feed_item_length','teaser'),
+	  	'#options' => get_Device_Type_list(),
+	 	'#weight' => 6,  	
+	  );	
+		
+			
+		$form['parameters']['city'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('City'),
+	    '#required' => TRUE,
+	   # '#default_value' => "First name", // added default value.
+	    '#size' => 64, // added
+	    '#maxlength' => 64, // added
+		'#weight' => 7, 
+	      );
+	
+	  	$form['parameters']['country'] = array(
+	    '#type' => 'select',
+	    '#title' => t('Country'),
+	    '#required' => TRUE,
+	    # '#default_value' => variable_get('feed_item_length','teaser'),
+	  	'#options' => location_get_iso3166_list(),    
+		'#weight' => 8, 	
+	  );
+	  
+	  $form['buttons'] = array(
+	    '#type' => 'fieldset',
+	    '#title' => t('Buttons'),
+	    '#collapsible' => TRUE,
+	    '#collapsed' => FALSE,
+	 	'#weight' => 20, 	   
+	  );
+	  
+	  
+	    $form['buttons']['submit'] = array(
+	    '#type' => 'submit',
+	    '#value' => 'Submit',
+	  
+	  );
+	    } else {
+	    	drupal_access_denied();
+	    }
 
   return $form;
 }
