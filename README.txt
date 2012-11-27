@@ -5,8 +5,6 @@ NEXT FEATURES
 
 [] -> Create user facebook to get acces_token
 [] -> Integrate with doopoints
-[] -> Configure permissions
-[] -> Correct encoding
 [] -> Update documentation
 
 [] -> Include other node types f.e:  hubs, trips...
@@ -54,9 +52,12 @@ The project contain these files:
 		./form_labdoo:
 			form_labdoo.inc  form_labdoo.info  form_labdoo.module
 	
-	- PHP form to manage API keys. It registers API keys for new user who want to use the Labdoo API key.
+	- PHP form to manage API keys and script to create necessary tables. It registers API keys for new user who want to use the Labdoo API key.
 		./form_labdoo_apikey:
 			form_labdoo_apikey.info  form_labdoo_apikey.module
+				Labdoo API key module
+			create_table_apikey.sh
+				Module to create necessary tables
 	
 	- Drupal module with basic operations to manage the labdoo drupal server.
 		./labdoo_nodes:
@@ -64,11 +65,7 @@ The project contain these files:
 			
 	- Jar dependencies to compile the java project
 		./libs:
-			commons-logging-1.1.jar  jsch-0.1.47.jar  junit-4.10.jar  ws-commons-util-1.0.2.jar  xmlrpc-client-3.1.3.jar  xmlrpc-common-3.1.3.jar  xmlrpc-server-3.1.3.jar
-			
-	- Necessary script to create the database table to manage api keys. 
-		./resources:
-			create_table_apikey.sh
+			commons-logging-1.1.jar  jsch-0.1.47.jar  junit-4.10.jar  ws-commons-util-1.0.2.jar  xmlrpc-client-3.1.3.jar  xmlrpc-common-3.1.3.jar  xmlrpc-server-3.1.3.jar			
 			
 	- Folder with java junit tests.
 		./tests:
@@ -81,6 +78,26 @@ The project contain these files:
 	- XMLRPC Server with the available xmlrpc operations.
 		./xmlrpc-server:
 			xmlrpc.info  xmlrpc.module  xmlrpc.test
+			
+	- Facebook modules. It includes a set of php modules to use Facebook api and to parse JSON messages.
+		./facebook_stats_like:
+			base_facebook.php facebook.php fb_ca_chain_bundle.crt
+				Facebook modules
+			json.php jsonpath.phpo jsonstore.php 
+				Json modules
+			facebook_script.php
+				PHP script to get facebook stadistics about Labdoo
+			facebook_stats_labdoo.info facebook_stats_labdoo.module
+				Module to get the facebook ranking from the database
+			config.ini
+				Configuration parameters to use in facebook_script.php and facebook_stats_labdoo.info
+			configure_cron.sh
+				Configure the facebook_ranking.sh script to be called every day
+			facebook_ranking.sh
+				Script to call the facebook_script.php via cron
+			create_table_ranking.sh
+				Script to create necessary tables
+			
 
 INSTALLATION
 ============
@@ -106,7 +123,10 @@ remote-clean-form_labdoo. It connects to the Labdoo web page and cleans the form
 remote-deploy-nodes. It deploys main modules to use the API. It includes operations to manage laptops and parse their laptops
 remote-clean-nodes. It connects to the Labdoo web page and cleans the nodes labdoo module
 
-remote-stop. It stops Labdoo remote server.                 
+remote-deploy-facebook_stats. It deploys the necessary facebook module with all its scripts
+remote-clean-facebook_stats. It connects to the Labdoo web page and cleans the facebook labdoo module
+
+remote-stop. It stops Labdoo remote server.
 remote-restart. It restart Labdoo remote server.  
 remote-deploy. It deploys Labdoo remote server.
 
@@ -125,8 +145,11 @@ For this reason, inside the build.xml, you have to modify server.name and client
  
 CONFIGURATION
 =============
- [Add permission configuration]
- [Restore API KEY]
+
+In order to manage labdoo module permissions correctly. Please, access to the path /admin/user/permissions.
+For Labdoo modules, It only has to permit  authenticated users.
+ 
+
 
 GETTING STARTED
 ===============
