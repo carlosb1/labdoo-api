@@ -38,6 +38,7 @@ public class Drupal7XmlRpcClientTest {
 	public static final String METHOD_USER_CREATE = "user.create";
 	public static final String METHOD_FILE_SAVE = "file.save";
 	public static final String METHOD_NODE_RETRIEVE = "node.retrieve";
+	public static final String METHOD_NODE_CREATE = "node.create";
 
 	private Logger log = Logger.getLogger(Drupal7XmlRpcClientTest.class.getName());
 
@@ -262,6 +263,21 @@ public class Drupal7XmlRpcClientTest {
 		return response;
 	}
 
+	public Map<String, Object> createPage(int nid) throws XmlRpcException {
+		HashMap<String, Object> node = new HashMap<String, Object>();
+		node.put("nid", "" + nid);
+		Vector<Object> params = new Vector<Object>();
+		params.add(node);
+		Map<String, Object> response = (Map<String, Object>) xmlRpcClient.execute(METHOD_NODE_CREATE, params);
+
+		// get individual fields of the node
+		String name = (String) response.get("title");
+		// TODO change for our parameters
+		// String fieldValue = (String) getFieldData(response, "field_myfield");
+
+		return response;
+	}
+
 	public Object getFieldData(Map<String, Object> response, String fieldName) {
 		Object[] obj = (Object[]) ((Map<String, Object>) response.get(fieldName)).get("und");
 		return ((Map<String, Object>) obj[0]).get("value");
@@ -283,8 +299,8 @@ public class Drupal7XmlRpcClientTest {
 		// http://[drupal
 		// host]/[endpoint]
 		// URL
-		String adminName = "youruser"; // Set your own admin user name
-		String adminPass = "yourpassword"; // Set your own admin user password
+		String adminName = "carlos.baez"; // Set your own admin user name
+		String adminPass = "noosferalabdoo"; // Set your own admin user password
 
 		// Basic details of sample new user
 		String newUserName = "kuku2";

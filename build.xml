@@ -20,7 +20,7 @@
     <property name="src.dir" value="client"/>
     <property name="build.dir" value="bin"/>
     <property name="lib.dir" value="libs"/>	
-    <property name="server.name" value="ec2-23-20-161-202.compute-1.amazonaws.com"/>
+    <property name="server.name" value="test"/>
     <property name="server.path" value="/persistent/html/sites/all/modules/"/>
 	<property name="client.key" value="/home/carlos/Desktop/key-dev.pem"/>
 	<property name="test.dir" location="tests" />

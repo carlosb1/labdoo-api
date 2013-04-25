@@ -33,7 +33,7 @@ import api.APIException;
 
 public class Laptop {
 	static final Log log = LogFactory.getLog(Laptop.class);
-	
+
 	public final static String ASSIGNED_S3 = "Assigned to a child, waiting to be shipped (S3)";
 
 	public final static String AVAILABLE_S8 = "(Library) Available (S8)";
@@ -69,7 +69,6 @@ public class Laptop {
 	public final static String FROM_HUB = "I belong to a Labdoo hub";
 	public final static String FROM_INTERNET = "From the Internet";
 	public final static String FROM_UCI_BOOKSTORE = "From the UCI bookstore";
-	
 
 	public final static String NULL = "null";
 	public final static String PASSED_QUALITY_ASSURANCE_S2 = "Passed quality assurance (S2)";
@@ -95,8 +94,7 @@ public class Laptop {
 
 	private static String dateToString(Date dateToFormat) {
 		// 2010-08-20T00:00:00
-		SimpleDateFormat dateFormater = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		return dateFormater.format(dateToFormat);
 
 	}
@@ -108,13 +106,10 @@ public class Laptop {
 
 	}
 
-	private static Object hashValueToParam(Object drupalParam)
-			throws APIException {
-		if (drupalParam instanceof Object[]
-				&& ((Object[]) drupalParam).length > 0) {
+	private static Object hashValueToParam(Object drupalParam) throws APIException {
+		if (drupalParam instanceof Object[] && ((Object[]) drupalParam).length > 0) {
 			Object arrayParam = ((Object[]) drupalParam)[0];
-			if (arrayParam instanceof Map
-					&& ((Map) arrayParam).get("value") != null) {
+			if (arrayParam instanceof Map && ((Map) arrayParam).get("value") != null) {
 				return ((Map) arrayParam).get("value");
 			}
 
@@ -123,8 +118,7 @@ public class Laptop {
 		return drupalParam;
 	}
 
-	public static Laptop newInstance(Map<String, Object> params)
-			throws APIException {
+	public static Laptop newInstance(Map<String, Object> params) throws APIException {
 		Laptop laptop = new Laptop();
 		Set<String> keys = params.keySet();
 		Iterator<String> iterator = keys.iterator();
@@ -191,11 +185,10 @@ public class Laptop {
 
 			if (key.equals("field_notes"))
 				laptop.setNotes((String) param);
-			
-			//field_laptop_serial_number			
-			if (key.equals("field_laptop_serial_number")) 
-				laptop.setSerialNumber((String) param);
 
+			// field_laptop_serial_number
+			if (key.equals("field_laptop_serial_number"))
+				laptop.setSerialNumber((String) param);
 
 			if (key.equals("field_date_received")) {
 				try {
@@ -226,19 +219,15 @@ public class Laptop {
 				}
 
 			}
-			
-			
 
 		}
 		return laptop;
 	}
 
-
 	private static Date stringToDate(String dateToParse) throws ParseException {
 		// 2010-08-20T00:00:00
 
-		SimpleDateFormat dateFormater = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		return dateFormater.parse(dateToParse);
 
 	}
@@ -279,7 +268,7 @@ public class Laptop {
 
 	private String status = "";
 
-	private String serialNumber;
+	private String serialNumber = "";
 
 	public String getA501c3Recip() {
 		return a501c3Recip;
@@ -513,12 +502,12 @@ public class Laptop {
 		return this;
 
 	}
-	
-	private void setSerialNumber(String serialNumber) {
+
+	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
-		
+
 	}
-	
+
 	public Map<String, Object> toMap() {
 		Map<String, Object> params = new HashMap<String, Object>();
 
@@ -557,7 +546,7 @@ public class Laptop {
 			params.put("field_notes", notes);
 		if (!serialNumber.equals(""))
 			params.put("field_laptop_serial_number", serialNumber);
-		
+
 		if (dateReceived != null)
 			params.put("field_date_received", dateToString(dateReceived));
 		if (dateDelivered != null)
@@ -573,19 +562,12 @@ public class Laptop {
 
 	@Override
 	public String toString() {
-		return "Laptop [serialNumber="+serialNumber+", a501c3Recip=" + a501c3Recip + ", availableDay="
-				+ availableDay + ", checkedoutLocation=" + checkedoutLocation
-				+ ", cpu=" + cpu + ", cpuType=" + cpuType + ", currentManager="
-				+ currentManager + ", currentOS=" + currentOS
-				+ ", dateDelivered=" + dateDelivered + ", dateReceived="
-				+ dateReceived + ", dateRecycled=" + dateRecycled
-				+ ", destination=" + destination + ", devType=" + devType
-				+ ", hardDrive=" + hardDrive + ", howDidYouLearn="
-				+ howDidYouLearn + ", id=" + id + ", laptopDomain="
-				+ laptopDomain + ", libraryNotification=" + libraryNotification
-				+ ", location=" + location + ", memory=" + memory + ", model="
-				+ model + ", nid=" + nid + ", notes=" + notes + ", status="
-				+ status + "]";
+		return "Laptop [serialNumber=" + serialNumber + ", a501c3Recip=" + a501c3Recip + ", availableDay=" + availableDay + ", checkedoutLocation="
+				+ checkedoutLocation + ", cpu=" + cpu + ", cpuType=" + cpuType + ", currentManager=" + currentManager + ", currentOS=" + currentOS
+				+ ", dateDelivered=" + dateDelivered + ", dateReceived=" + dateReceived + ", dateRecycled=" + dateRecycled + ", destination=" + destination
+				+ ", devType=" + devType + ", hardDrive=" + hardDrive + ", howDidYouLearn=" + howDidYouLearn + ", id=" + id + ", laptopDomain=" + laptopDomain
+				+ ", libraryNotification=" + libraryNotification + ", location=" + location + ", memory=" + memory + ", model=" + model + ", nid=" + nid
+				+ ", notes=" + notes + ", status=" + status + "]";
 	}
 
 }
